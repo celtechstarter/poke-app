@@ -1,0 +1,39 @@
+# Node.js Abhängigkeiten
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+*.log.*
+debug.log
+
+# Umgebungsvariablen
+*.env
+*.env.local
+*.env.*.local
+
+# Vite Build-Output
+frontend/dist/
+
+# React Build-Output (falls CRA verwendet wird)
+build/
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+
+# IDE- und Editor-Dateien
+.vscode/
+.idea/
+*.swp
+
+# Betriebssystem-Dateien
+*.bak
+*.tmp
+*.lock
+
+# Sonstiges
+frontend/public/static/
