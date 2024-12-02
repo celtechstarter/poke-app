@@ -1,0 +1,9 @@
+
+
+body {
+    font-family: var(--font-sans); /* Radix Design Token */
+    background-color: var(--color-background); /* Radix Theme Variable */
+    margin: 0;
+    padding: 0;
+  }
+  
