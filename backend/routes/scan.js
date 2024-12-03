@@ -1,16 +1,33 @@
 const express = require('express');
-const { addCard, getCards } = require('../models/card');
+
+const Card = require('../models/card'); // Dein Card-Mongoose-Modell
 const router = express.Router();
 
-router.post('/upload', (req, res) => {
+
+// API für das Speichern eines Bildes in der MongoDB
+router.post('/upload', async (req, res) => {
   const { image, data } = req.body;
-  const newCard = { id: Date.now(), image, data };
-  addCard(newCard);
-  res.json(newCard);
+  try {
+    const newCard = new Card({ image, data }); // Speichere Image und Meta-Daten
+    await newCard.save();
+    res.status(201).json(newCard);
+  } catch (error) {
+    console.error('Fehler beim Speichern der Karte:', error);
+    res.status(500).json({ error: 'Speichern fehlgeschlagen' });
+  }
 });
 
-router.get('/cards', (req, res) => {
-  res.json(getCards());
+
+// API für das Abrufen aller Karten
+router.get('/cards', async (req, res) => {
+  try {
+    const cards = await Card.find(); // Alle Karten abrufen
+    res.status(200).json(cards);
+  } catch (error) {
+    console.error('Fehler beim Abrufen der Karten:', error);
+    res.status(500).json({ error: 'Abruf fehlgeschlagen' });
+  }
 });
+
 
 module.exports = router;
