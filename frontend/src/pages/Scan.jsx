@@ -1,12 +1,13 @@
 import React from 'react';
-
+import { Flex, Text, Button } from '@radix-ui/themes';
 
 const ScanPage = () => {
   return (
-    <div>
-      <h1>Scan Your Pokémon Card</h1>
-      <button>Start Scanning</button>
-    </div>
+    <Flex direction="column" align="center" justify="center" gap="4" style={{ height: '100vh' }}>
+      <Text size="6" weight="bold">Scan Your Pokémon Card</Text>
+   
+      <Button>Start Scanning</Button>
+    </Flex>
   );
 };
 
