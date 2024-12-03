@@ -10,11 +10,10 @@ const Scan = () => {
     setImageSrc(imageSrc);
   }, [webcamRef]);
 
-<<<<<<< Updated upstream
+}
 
 const ScanPage = () => {
-=======
->>>>>>> Stashed changes
+
   return (
     <div>
       <h1>Pokémon-Karten-Scanner</h1>
