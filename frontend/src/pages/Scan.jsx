@@ -1,7 +1,8 @@
 import React, { useRef, useCallback, useState } from 'react';
+import { Flex, Text, Button } from '@radix-ui/themes';
 import Webcam from 'react-webcam';
 
-const Scan = () => {
+const ScanPage = () => {
   const webcamRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
 
@@ -10,14 +11,9 @@ const Scan = () => {
     setImageSrc(imageSrc);
   }, [webcamRef]);
 
-<<<<<<< Updated upstream
-
-const ScanPage = () => {
-=======
->>>>>>> Stashed changes
   return (
-    <div>
-      <h1>Pokémon-Karten-Scanner</h1>
+    <Flex direction="column" align="center" justify="center" gap="4" style={{ height: '100vh' }}>
+      <Text size="6" weight="bold">Scan Your Pokémon Card</Text>
       <Webcam
         audio={false}
         ref={webcamRef}
@@ -25,15 +21,15 @@ const ScanPage = () => {
         width={350}
         height={350}
       />
-      <button onClick={capture}>Foto aufnehmen</button>
+      <Button onClick={capture}>Foto aufnehmen</Button>
       {imageSrc && (
-        <div>
-          <h2>Aufgenommenes Bild:</h2>
-          <img src={imageSrc} alt="Aufgenommene Pokémon-Karte" />
-        </div>
+        <Flex direction="column" align="center" gap="2">
+          <Text size="4" weight="medium">Aufgenommenes Bild:</Text>
+          <img src={imageSrc} alt="Aufgenommene Pokémon-Karte" style={{ width: '350px', height: 'auto' }} />
+        </Flex>
       )}
-    </div>
+    </Flex>
   );
 };
 
-export default Scan;
+export default ScanPage;
