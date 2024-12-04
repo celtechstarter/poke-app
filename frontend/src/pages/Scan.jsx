@@ -3,7 +3,6 @@ import { Flex, Text, Button } from '@radix-ui/themes';
 import Webcam from 'react-webcam';
 import axios from 'axios';
 
-
 const ScanPage = () => {
   const webcamRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
@@ -14,10 +13,24 @@ const ScanPage = () => {
   }, [webcamRef]);
 
   const saveImage = async () => {
+    if (!imageSrc) {
+      alert('Kein Bild zum Hochladen vorhanden.');
+      return;
+    }
+
     try {
-      // Sende Bild an das Backend
-      await axios.post('http://localhost:3001/upload', { image: imageSrc, data: "Pokémon Card" });
+      const formData = new FormData();
+      const blob = await fetch(imageSrc).then(res => res.blob());
+      formData.append('file', blob, 'screenshot.jpg');
+
+      const response = await axios.post('http://localhost:5000/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
       alert('Bild erfolgreich gespeichert!');
+      console.log('Antwort vom Server:', response.data);
       setImageSrc(null); // Bild nach dem Speichern zurücksetzen
     } catch (error) {
       console.error('Fehler beim Speichern des Bildes:', error);
@@ -31,7 +44,7 @@ const ScanPage = () => {
 
   return (
     <Flex direction="column" align="center" justify="center" gap="4" style={{ height: '100vh' }}>
-      <Text size="6" weight="bold">Scan Your Pokémon Card</Text>
+      <Text size="6" weight="bold">Scannen Sie Ihre Pokémon-Karte</Text>
       <Webcam
         audio={false}
         ref={webcamRef}
@@ -45,8 +58,8 @@ const ScanPage = () => {
           <Text size="4" weight="medium">Aufgenommenes Bild:</Text>
           <img src={imageSrc} alt="Aufgenommene Pokémon-Karte" style={{ width: '350px', height: 'auto' }} />
           <Flex gap="4">
-            <Button onClick={deleteImage} color="red">Delete</Button>
-            <Button onClick={saveImage} color="green">Save</Button>
+            <Button onClick={deleteImage} color="red">Löschen</Button>
+            <Button onClick={saveImage} color="green">Speichern</Button>
           </Flex>
         </Flex>
       )}
