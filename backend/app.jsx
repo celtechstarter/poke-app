@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
+const mongoose = require('mongoose');
 
 // Importiere Routen
 const authRoutes = require('./routes/auth');
@@ -13,6 +14,17 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('Erfolgreich mit MongoDB verbunden!'))
+  .catch((err) => {
+    console.error('Fehler bei der Verbindung zu MongoDB:', err.message);
+    process.exit(1); // Beende den Prozess bei Verbindungsfehler
+  });
 
 // // Debugging: Überprüfe, was importiert wurde
 // console.log('authRoutes:', authRoutes);

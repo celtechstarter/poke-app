@@ -3,6 +3,7 @@ import { Flex, Text, Button } from '@radix-ui/themes';
 import Webcam from 'react-webcam';
 import axios from 'axios';
 
+
 const ScanPage = () => {
   const webcamRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
