@@ -7,6 +7,7 @@ import ScanPage from './pages/Scan';
 import LoginPage from './pages/LoginPage'; 
 import MyCards from './pages/MyCards';
 import Navbar from './components/Navbar';
+import OcrPage from './pages/OcrPage'; // Importiere die OCR-Seite
 
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/scan" element={<ScanPage />} />
         <Route path="/my-cards" element={<MyCards />} />
+        <Route path="/ocr" element={<OcrPage />} /> {/* Hier wird die OCR-Seite hinzugefügt */}
+
       </Routes>
     </Router>
     </Theme>
