@@ -4,6 +4,8 @@ const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const cors = require('cors');
 require('dotenv').config();
+const Tesseract = require('tesseract.js');
+
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -28,6 +30,81 @@ mongoose.connect(mongoURI).then(() => console.log('MongoDB verbunden')).catch((e
 //     };
 //   },
 // });
+
+
+// OCR-Route
+app.post('/ocr', async (req, res) => {
+  try {
+    const { fileId } = req.body; // Bild-ID aus der Anfrage
+    if (!fileId) {
+      return res.status(400).json({ error: 'FileId ist erforderlich.' });
+    }
+
+    // Bild aus MongoDB herunterladen
+    const downloadStream = gfs.openDownloadStream(new mongoose.Types.ObjectId(fileId));
+    const tempFilePath = path.join(__dirname, `./temp/${fileId}.jpg`);
+    
+    const writeStream = fs.createWriteStream(tempFilePath);
+    downloadStream.pipe(writeStream);
+
+    writeStream.on('close', async () => {
+      // OCR mit Tesseract.js
+      try {
+        const { data: { text } } = await Tesseract.recognize(tempFilePath, 'eng', {
+          logger: (info) => console.log(info), // Protokollierungsoptionen (optional)
+        });
+        
+        fs.unlinkSync(tempFilePath); // Temporäre Datei löschen
+        res.json({ text }); // Extrahierter Text an den Client senden
+      } catch (error) {
+        console.error('Fehler bei der Texterkennung:', error);
+        fs.unlinkSync(tempFilePath); // Temporäre Datei löschen
+        res.status(500).json({ error: 'Fehler bei der Texterkennung.' });
+      }
+    });
+
+    writeStream.on('error', (err) => {
+      console.error('Fehler beim Herunterladen der Datei:', err);
+      res.status(500).json({ error: 'Fehler beim Herunterladen der Datei.' });
+    });
+  } catch (error) {
+    console.error('Fehler bei der Texterkennung:', error);
+    res.status(500).json({ error: 'Fehler bei der Texterkennung.' });
+  }
+});
+
+// ScraperAPI-Route
+app.post('/scrape-price', async (req, res) => {
+  try {
+    const { cardName } = req.body; // Kartentext aus OCR
+    if (!cardName) {
+      return res.status(400).json({ error: 'CardName ist erforderlich.' });
+    }
+
+    const scraperApiUrl = `http://api.scraperapi.com?api_key=${process.env.SCRAPER_API_KEY}&url=https://www.cardmarket.com/en/Magic/Products/Search?searchString=${encodeURIComponent(cardName)}`;
+    
+    // ScraperAPI-Anfrage
+    const response = await axios.get(scraperApiUrl);
+    const html = response.data;
+
+    // Preis aus dem HTML extrahieren
+    const priceRegex = /<span class="price">\s*€(\d+\.\d{2})\s*<\/span>/;
+    const match = html.match(priceRegex);
+
+    if (match && match[1]) {
+      const price = match[1];
+      res.json({ cardName, price });
+    } else {
+      res.status(404).json({ error: 'Preis nicht gefunden' });
+    }
+  } catch (error) {
+    console.error('Fehler beim Scraping-Prozess:', error);
+    res.status(500).json({ error: 'Fehler beim Scraping-Prozess.' });
+  }
+});
+
+
+
 
 const storage = multer.memoryStorage();
 const File = mongoose.model('File', new mongoose.Schema({}));
