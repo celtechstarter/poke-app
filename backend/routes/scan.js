@@ -1,8 +1,6 @@
 const express = require('express');
-
 const Card = require('../models/card'); // Dein Card-Mongoose-Modell
 const router = express.Router();
-
 
 // API für das Speichern eines Bildes in der MongoDB
 router.post('/upload', async (req, res) => {
@@ -17,7 +15,6 @@ router.post('/upload', async (req, res) => {
   }
 });
 
-
 // API für das Abrufen aller Karten
 router.get('/cards', async (req, res) => {
   try {
@@ -29,8 +26,4 @@ router.get('/cards', async (req, res) => {
   }
 });
 
-
 module.exports = router;
-
-
-
