@@ -1,52 +1,37 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Flex, Text } from '@radix-ui/themes';
+import {  Flex, Text } from '@radix-ui/themes';
 
 const Navbar = () => (
-  <Flex
-    as="nav"
-    css={{
-      position: 'relative',
-      backgroundColor: '#000', // Schwarzer Hintergrund
-      height: '20px',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: '0 20px',
+    
+    <Flex
+    className="navbar"
+    style={{
+    position: 'relative ',
+    backgroundColor: '#2e2e2e ',
+    height: '60px ',
+    justifyContent: 'space-between ',
+    alignItems: 'center ',
+    padding: ' 20px ',
     }}
   >
-    {/* Hintergrund-Text (PokeScan) */}
-    <Text
-      size="9"
-      weight="bold"
-      css={{
-        color: '#2e2e2e', // Dunkelgrauer Text
-        position: 'absolute',
-        top: '50%', // Vertikal zentrieren
-        left: '50%', // Horizontal zentrieren
-        transform: 'translate(-50%, -50%)', // Perfekte Zentrierung
-        zIndex: 0, // Im Hintergrund
-        whiteSpace: 'nowrap',
-        userSelect: 'none', // Nicht auswählbar
-        pointerEvents: 'none', // Nicht interaktiv
-      }}
-    >
-      PokeScan
-    </Text>
-
+  
+    
+  
     {/* Navigation-Links */}
     <Flex
-      gap="8"
-      css={{
-        zIndex: 1, // Über dem Hintergrund-Text
-        position: 'relative',
+      gap="20px"
+      style={{
+        zIndex: 1,
       }}
     >
       <Link
         to="/"
         style={{
           textDecoration: 'none',
-          color: 'white', // Weiße Schrift
+          color: 'pink',
           fontWeight: 'bold',
+          fontSize: '16px',
         }}
       >
         Home
@@ -57,6 +42,7 @@ const Navbar = () => (
           textDecoration: 'none',
           color: 'white',
           fontWeight: 'bold',
+          fontSize: '16px',
         }}
       >
         My Cards
@@ -67,6 +53,7 @@ const Navbar = () => (
           textDecoration: 'none',
           color: 'white',
           fontWeight: 'bold',
+          fontSize: '16px',
         }}
       >
         Scan
@@ -75,14 +62,19 @@ const Navbar = () => (
         to="/about"
         style={{
           textDecoration: 'none',
-          color: '',
+          color: 'white',
           fontWeight: 'bold',
+          fontSize: '16px',
         }}
       >
         About Us
       </Link>
     </Flex>
   </Flex>
+  
+  
 );
+console.log('Navbar loaded');
+
 
 export default Navbar;

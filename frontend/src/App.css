@@ -1,8 +1,13 @@
 
-
 body {
   font-family: var(--font-sans); /* Radix Design Token */
-  background-color: var(--color-background); /* Radix Theme Variable */
   margin: 0;
   padding: 0;
+
+
+  background-image: url('/images/logo1.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.9; /* Leicht transparent */
 }
