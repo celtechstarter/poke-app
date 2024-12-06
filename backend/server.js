@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
@@ -122,6 +122,57 @@ app.post('/upload', upload.single('file'), (req, res) => {
   file.save();
   res.status(201).json({ message: 'Datei erfolgreich hochgeladen.', file: req.file });
 });
+
+// Starten des Servers
+app.listen(port, () => {
+  console.log(`Server läuft auf Port ${port}`);
+});
+*/
+
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const multer = require('multer');
+require('dotenv').config();
+
+const app = express();
+const port = process.env.PORT || 5000;
+
+// Middleware
+app.use(express.json());
+app.use(cors());
+
+// MongoDB URI
+const mongoURI = process.env.MONGO_URI;
+
+// Verbindung zur MongoDB herstellen
+mongoose.connect(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => console.log('MongoDB verbunden'))
+  .catch((err) => console.error('MongoDB Verbindung fehlgeschlagen:', err));
+
+// Routen importieren
+const scanRoutes = require('./routes/scan');
+const uploadRoutes = require('./routes/upload');
+
+// OCR und Scraping-Funktionen importieren
+const { ocrHandler } = require('./utils/ocr'); // Eine separate Datei für OCR-Logik
+const { scrapePriceHandler } = require('./utils/scraper'); // Separate Datei für Scraper
+
+// Routen registrieren
+app.use('/scan', scanRoutes); // `/scan` für Karten-Operationen
+app.use('/upload', uploadRoutes); // `/upload` für S3-Bilder
+
+// OCR-Route
+app.post('/ocr', ocrHandler);
+
+// Scraper-Route
+app.post('/scrape-price', scrapePriceHandler);
+
+// Standardroute
+app.get('/', (req, res) => res.send('PokeScan Backend läuft!'));
 
 // Starten des Servers
 app.listen(port, () => {
