@@ -1,13 +1,61 @@
-
 body {
   font-family: var(--font-sans); /* Radix Design Token */
   margin: 0;
   padding: 0;
-
-
   background-image: url('/images/logo1.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   opacity: 0.9; /* Leicht transparent */
+  overflow: hidden; /* Kein Scrollen */
+  height: 100vh; /* Volle Höhe des Viewports */
+  width: 100vw; /* Volle Breite des Viewports */
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #2e2e2e;
+  height: 60px;
+  display: flex;
+  justify-content: center; /* Zentriert die Links */
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Stellt sicher, dass die Navbar über anderen Elementen bleibt */
+}
+
+.navbar a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0 15px; /* Abstand zwischen den Links */
+}
+
+.navbar a:hover {
+  color: pink;
+  transition: color 0.3s ease;
+}
+
+.navbar .logout-container {
+  margin-left: 50px; /* Erhöht den Abstand nach links */
+}
+
+.navbar button {
+  color: red;
+  font-weight: bold;
+  font-size: 16px;
+  background: none;
+  border: 1px solid red;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.navbar button:hover {
+  background-color: red;
+  color: white;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

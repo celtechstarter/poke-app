@@ -9,9 +9,10 @@ const Navbar = ({ onLogout }) => (
       position: "relative",
       backgroundColor: "#2e2e2e",
       height: "60px",
-      justifyContent: "space-between",
+      width: "100%",
+      justifyContent: "center",
       alignItems: "center",
-      padding: "20px",
+      padding: "0 20px",
     }}
   >
     <Flex gap="20px" style={{ zIndex: 1 }}>
@@ -27,6 +28,8 @@ const Navbar = ({ onLogout }) => (
       <Link to="/about" style={{ textDecoration: "none", color: "white", fontWeight: "bold", fontSize: "16px" }}>
         About Us
       </Link>
+    </Flex>
+    <div className="logout-container">
       <button
         onClick={onLogout}
         style={{
@@ -35,13 +38,15 @@ const Navbar = ({ onLogout }) => (
           fontWeight: "bold",
           fontSize: "16px",
           background: "none",
-          border: "none",
+          border: "1px solid red",
+          padding: "5px 10px",
+          borderRadius: "5px",
           cursor: "pointer",
         }}
       >
         Logout
       </button>
-    </Flex>
+    </div>
   </Flex>
 );
 
