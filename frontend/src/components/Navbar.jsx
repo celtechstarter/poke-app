@@ -1,30 +1,36 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {  Flex, Text } from '@radix-ui/themes';
+import { Flex, Text, Button } from '@radix-ui/themes';
 
-const Navbar = () => (
-    
-    <Flex
+const Navbar = ({ onLogout }) => (
+  <Flex
     className="navbar"
     style={{
-    position: 'relative ',
-    backgroundColor: '#2e2e2e ',
-    height: '60px ',
-    justifyContent: 'space-between ',
-    alignItems: 'center ',
-    padding: ' 20px ',
+      position: 'fixed',
+      top: 0,
+      width: '100%',
+      backgroundColor: '#2e2e2e',
+      height: '60px',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '0 20px',
+      zIndex: 1000,
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     }}
   >
-  
-    
-  
-    {/* Navigation-Links */}
-    <Flex
-      gap="20px"
+    {/* Logo oder App-Name */}
+    <Text
+      size="5"
+      weight="bold"
       style={{
-        zIndex: 1,
+        color: 'white',
       }}
     >
+      PokeScan
+    </Text>
+
+    {/* Navigation-Links */}
+    <Flex gap="20px">
       <Link
         to="/"
         style={{
@@ -70,11 +76,23 @@ const Navbar = () => (
         About Us
       </Link>
     </Flex>
-  </Flex>
-  
-  
-);
-console.log('Navbar loaded');
 
+    {/* Logout-Button */}
+    {onLogout && (
+      <Button
+        variant="primary"
+        size="2"
+        onClick={onLogout}
+        style={{
+          backgroundColor: 'crimson',
+          color: 'white',
+          fontWeight: 'bold',
+        }}
+      >
+        Logout
+      </Button>
+    )}
+  </Flex>
+);
 
 export default Navbar;
