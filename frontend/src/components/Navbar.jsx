@@ -1,52 +1,43 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Flex, Text } from '@radix-ui/themes';
+import { Flex, Text, Button } from '@radix-ui/themes';
 
-const Navbar = () => (
+const Navbar = ({ onLogout }) => (
   <Flex
-    as="nav"
-    css={{
-      position: 'relative',
-      backgroundColor: '#000', // Schwarzer Hintergrund
-      height: '20px',
-      justifyContent: 'center',
+    className="navbar"
+    style={{
+      position: 'fixed',
+      top: 0,
+      width: '100%',
+      backgroundColor: '#2e2e2e',
+      height: '60px',
+      justifyContent: 'space-between',
       alignItems: 'center',
       padding: '0 20px',
+      zIndex: 1000,
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     }}
   >
-    {/* Hintergrund-Text (PokeScan) */}
+    {/* Logo oder App-Name */}
     <Text
-      size="9"
+      size="5"
       weight="bold"
-      css={{
-        color: '#2e2e2e', // Dunkelgrauer Text
-        position: 'absolute',
-        top: '50%', // Vertikal zentrieren
-        left: '50%', // Horizontal zentrieren
-        transform: 'translate(-50%, -50%)', // Perfekte Zentrierung
-        zIndex: 0, // Im Hintergrund
-        whiteSpace: 'nowrap',
-        userSelect: 'none', // Nicht auswählbar
-        pointerEvents: 'none', // Nicht interaktiv
+      style={{
+        color: 'white',
       }}
     >
       PokeScan
     </Text>
 
     {/* Navigation-Links */}
-    <Flex
-      gap="8"
-      css={{
-        zIndex: 1, // Über dem Hintergrund-Text
-        position: 'relative',
-      }}
-    >
+    <Flex gap="20px">
       <Link
         to="/"
         style={{
           textDecoration: 'none',
-          color: 'white', // Weiße Schrift
+          color: 'pink',
           fontWeight: 'bold',
+          fontSize: '16px',
         }}
       >
         Home
@@ -57,6 +48,7 @@ const Navbar = () => (
           textDecoration: 'none',
           color: 'white',
           fontWeight: 'bold',
+          fontSize: '16px',
         }}
       >
         My Cards
@@ -67,6 +59,7 @@ const Navbar = () => (
           textDecoration: 'none',
           color: 'white',
           fontWeight: 'bold',
+          fontSize: '16px',
         }}
       >
         Scan
@@ -75,13 +68,30 @@ const Navbar = () => (
         to="/about"
         style={{
           textDecoration: 'none',
-          color: '',
+          color: 'white',
           fontWeight: 'bold',
+          fontSize: '16px',
         }}
       >
         About Us
       </Link>
     </Flex>
+
+    {/* Logout-Button */}
+    {onLogout && (
+      <Button
+        variant="primary"
+        size="2"
+        onClick={onLogout}
+        style={{
+          backgroundColor: 'crimson',
+          color: 'white',
+          fontWeight: 'bold',
+        }}
+      >
+        Logout
+      </Button>
+    )}
   </Flex>
 );
 

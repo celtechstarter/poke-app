@@ -6,9 +6,9 @@ const LoginPage = ({ onLoginSuccess }) => {
   const handleGoogleLoginSuccess = (credentialResponse) => {
     console.log('Login erfolgreich:', credentialResponse);
 
-    // Speichere Login-Status in localStorage
-    localStorage.setItem('isAuthenticated', 'true');
-    onLoginSuccess(); // Authentifizierungsstatus aktivieren
+    const user = { token: credentialResponse.credential }; // Speichere Token des Benutzers
+    localStorage.setItem('user', JSON.stringify(user)); // Speichere Benutzerinformationen in localStorage
+    onLoginSuccess(user); // Authentifizierungsstatus aktivieren
   };
 
   const handleGoogleLoginError = () => {
