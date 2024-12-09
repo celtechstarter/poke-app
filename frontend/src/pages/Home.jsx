@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex, Text, Button } from '@radix-ui/themes';
 
-const IndexPage = () => {
+const Home = () => {
   return (
     <Flex direction="column" align="center" justify="center" gap="4" style={{ height: '100vh' }}>
       <Text size="6" weight="bold">
@@ -14,4 +14,4 @@ const IndexPage = () => {
   );
 };
 
-export default IndexPage;
+export default Home;

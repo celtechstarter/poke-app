@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Theme } from '@radix-ui/themes';
-import Navbar from './components/Navbar'; // Navbar wieder hinzugefügt
+import Navbar from './components/Navbar'; // Navbar hinzugefügt
 import Home from './pages/Home';
 import About from './pages/About';
 import ScanPage from './pages/Scan';
@@ -13,8 +13,9 @@ import './App.css';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // Prüfen, ob der Benutzer eingeloggt ist
   useEffect(() => {
-    const user = localStorage.getItem('user'); // Überprüft, ob der Benutzer eingeloggt ist
+    const user = localStorage.getItem('user'); // Überprüft, ob Benutzerdaten vorhanden sind
     if (user) {
       setIsAuthenticated(true);
     }
@@ -27,7 +28,7 @@ function App() {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem('user');
+    localStorage.removeItem('user'); // Entfernt die Benutzerdaten
   };
 
   return (

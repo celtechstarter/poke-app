@@ -14,18 +14,19 @@ passport.use(
       callbackURL: 'http://localhost:5000/auth/google/callback', // Lokale Callback-URL
     },
     (accessToken, refreshToken, profile, done) => {
-      console.log('Profil:', profile); // Hier kannst du das Profil des Nutzers speichern oder verarbeiten
+      console.log('Profil:', profile); // Profil verarbeiten
       done(null, profile);
     }
   )
 );
 
-// Endpunkte für Google OAuth
+// Google Login Route
 router.get(
   '/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
+// Google Callback Route
 router.get(
   '/google/callback',
   passport.authenticate('google', {
@@ -33,5 +34,24 @@ router.get(
     failureRedirect: '/login', // Weiterleitung bei Fehler
   })
 );
+
+// Route zum Überprüfen der Anmeldung
+router.get('/current_user', (req, res) => {
+  if (req.user) {
+    res.send(req.user);
+  } else {
+    res.status(401).send({ error: 'Nicht angemeldet' });
+  }
+});
+
+// Route zum Abmelden
+router.get('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).send({ error: 'Fehler beim Abmelden' });
+    }
+    res.redirect('/');
+  });
+});
 
 module.exports = router;
