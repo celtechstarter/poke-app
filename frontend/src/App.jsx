@@ -9,6 +9,7 @@ import MyCards from "./pages/MyCards";
 import Navbar from "./components/Navbar";
 import OcrPage from "./pages/OcrPage";
 
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -34,7 +35,7 @@ function App() {
       <Router>
         {isAuthenticated ? (
           <>
-            <Navbar onLogout={handleLogout} />
+          <Navbar onLogout={handleLogout} />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -50,6 +51,7 @@ function App() {
         )}
       </Router>
     </Theme>
+    
   );
 }
 

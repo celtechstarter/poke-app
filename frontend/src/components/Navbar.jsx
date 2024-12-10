@@ -7,15 +7,16 @@ const Navbar = ({ onLogout }) => (
     className="navbar"
     style={{
       position: "relative",
-      backgroundColor: "#2e2e2e",
-      height: "60px",
+      backgroundColor: "#1e1e1e",
+      height: "70px",
       width: "100%",
       justifyContent: "center",
       alignItems: "center",
       padding: "0 20px",
+      boxShadow: "0 3px 7px rgba(0, 0, 0, 0.3)",
     }}
   >
-    <Flex gap="20px" style={{ zIndex: 1 }}>
+    <Flex gap="20px" style={{ zIndex: 100 }}>
       <Link to="/" style={{ textDecoration: "none", color: "pink", fontWeight: "bold", fontSize: "16px" }}>
         Home
       </Link>
