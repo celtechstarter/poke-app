@@ -12,7 +12,7 @@ const ScanPage = () => {
   // Foto aufnehmen
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
-    setImageSrc(imageSrc);
+    setImageSrc(imageSrc); // Setzt das Screenshot-Bild
   }, [webcamRef]);
 
   // Bild hochladen und OCR-Text extrahieren
@@ -39,7 +39,7 @@ const ScanPage = () => {
       }
 
       setStatusMessage('Bild erfolgreich gespeichert!');
-      setImageSrc(null);
+      setImageSrc(null); // Entfernt das gespeicherte Bild und aktiviert die Webcam erneut
     } catch (error) {
       console.error('Fehler beim Speichern des Bildes:', error);
       setStatusMessage('Fehler beim Speichern des Bildes.');
@@ -48,7 +48,7 @@ const ScanPage = () => {
 
   // Bild löschen
   const deleteImage = () => {
-    setImageSrc(null);
+    setImageSrc(null); // Setzt die Kamera zurück
   };
 
   return (
@@ -75,33 +75,40 @@ const ScanPage = () => {
           borderRadius: '10px',
         }}
       >
-        {/* Webcam und aufgenommenes Bild nebeneinander */}
-        <Flex direction="row" align="center" justify="center" gap="20px">
-          <Webcam
-            audio={false}
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            style={{
-              width: '350px',
-              height: 'auto',
-              borderRadius: '10px',
-              border: '2px solid #ccc',
-            }}
-          />
-
-          {imageSrc && (
+        {/* Webcam wird hochkant angezeigt */}
+        <div
+          style={{
+            position: 'relative',
+            width: '300px', // Breite des Kamerafensters
+            height: '400px', // Höhe des Kamerafensters für Hochformat
+            borderRadius: '10px',
+            overflow: 'hidden',
+            border: '2px solid #ccc',
+          }}
+        >
+          {!imageSrc ? (
+            <Webcam
+              audio={false}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+            />
+          ) : (
             <img
               src={imageSrc}
               alt="Aufgenommene Pokémon-Karte"
               style={{
-                width: '350px',
-                height: 'auto',
-                borderRadius: '10px',
-                border: '2px solid #ccc',
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
               }}
             />
           )}
-        </Flex>
+        </div>
 
         {/* Buttons */}
         <Flex gap="10px">
@@ -147,3 +154,4 @@ const ScanPage = () => {
 };
 
 export default ScanPage;
+

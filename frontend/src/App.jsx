@@ -31,7 +31,7 @@ function App() {
   };
 
   return (
-    <Theme appearance="dark" accentColor="crimson" grayColor="sand" radius="medium" scaling="95%">
+    <Theme appearance="light" accentColor="crimson" grayColor="sand" radius="medium" scaling="95%">
       <Router>
         {isAuthenticated ? (
           <>

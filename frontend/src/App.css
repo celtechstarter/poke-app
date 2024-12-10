@@ -1,61 +1,129 @@
+@import "@radix-ui/themes/styles.css";
+
+/* Global Styles */
 body {
-  font-family: var(--font-sans); /* Radix Design Token */
+  font-family: var(--font-sans);
   margin: 0;
   padding: 0;
-  background-image: url('/images/logo1.jpg');
+  background-image: url('/images/logo1.jpg'); /* Hintergrundbild */
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  opacity: 0.9; /* Leicht transparent */
+  background-attachment: fixed;
+  opacity: 0.9;
   overflow: hidden; /* Kein Scrollen */
   height: 100vh; /* Volle Höhe des Viewports */
   width: 100vw; /* Volle Breite des Viewports */
+  z-index: -100;
 }
 
+/* Navbar Styles */
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: #2e2e2e;
-  height: 60px;
+  background-color: rgba(31, 31, 31, 0.95); /* Halbtransparente schwarze Leiste */
+  height: 70px;
   display: flex;
-  justify-content: center; /* Zentriert die Links */
+  justify-content: space-between; /* Links und Logo aufteilen */
   align-items: center;
   padding: 0 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 1000; /* Stellt sicher, dass die Navbar über anderen Elementen bleibt */
+  z-index: 1000;
 }
 
-.navbar a {
-  text-decoration: none;
+/* Rotierendes Logo Container */
+.rotating-logo-container {
+  width: 65px; /* Breite des Logos */
+  height: 70px; /* Höhe des Logos */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Rotierendes Logo */
+.rotating-logo {
+  width: 100%;
+  height: auto;
+  animation: spin 15s linear infinite; /* Rotationseffekt */
+}
+
+/* Keyframes für die Rotation */
+@keyframes spin {
+  from {
+    transform: rotateY(0deg); /* Startwinkel */
+  }
+  to {
+    transform: rotateY(360deg); /* Endwinkel */
+  }
+}
+
+/* Logo Text (falls verwendet) */
+.navbar .logo {
+  font-size: 24px;
+  font-weight: bold;
   color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: linear-gradient(245deg, #ffffff, #898989); /* Chrome-Effekt */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Navbar Links */
+.navbar .links {
+  display: flex;
+  gap: 35px; /* Abstände zwischen den Links */
+}
+
+.nav-link {
+  text-decoration: none;
   font-weight: bold;
   font-size: 16px;
-  margin: 0 15px; /* Abstand zwischen den Links */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: linear-gradient(245deg, #e0e0e0, #9d9c9c); /* Chrome-Effekt */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  transition: all 0.4s ease;
 }
 
-.navbar a:hover {
-  color: pink;
-  transition: color 0.3s ease;
+.nav-link:hover {
+  transform: translateY(2px); /* Hebt den Button leicht an */
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4), inset 0 -1px 3px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(245deg, #e0e0e0, #c4c4c4); /* Hellerer Effekt */
 }
 
-.navbar .logout-container {
-  margin-left: 50px; /* Erhöht den Abstand nach links */
-}
-
+/* Logout Button */
 .navbar button {
-  color: red;
   font-weight: bold;
   font-size: 16px;
-  background: none;
-  border: 1px solid red;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #ff4d4d, #cc0000); /* Roter Chrome-Effekt */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.5);
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .navbar button:hover {
-  background-color: red;
-  color: white;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transform: translateY(2px);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4), inset 0 -1px 3px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(145deg, #ff6666, #ff0000); /* Leicht heller */
+}
+
+/* Mobile Friendly */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  .navbar .links {
+    flex-direction: column;
+    gap: 15px;
+  }
 }
