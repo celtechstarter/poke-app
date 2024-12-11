@@ -1,37 +1,48 @@
 const express = require('express');
 const multer = require('multer');
-const multerS3 = require('multer-s3');
-const AWS = require('aws-sdk');
+const crypto = require('crypto'); // Für zufällige Dateinamen
+const Card = require('../models/card'); // Dein Mongoose-Modell
 
 const router = express.Router();
 
-// AWS-Konfiguration
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION,
-});
-
-const s3 = new AWS.S3();
-
-// Multer-S3-Setup
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: 'pokecenter',
-    acl: 'public-read',
-    metadata: function (req, file, cb) {
-      cb(null, { fieldName: file.fieldname });
-    },
-    key: function (req, file, cb) {
-      cb(null, Date.now().toString() + '-' + file.originalname);
-    },
-  }),
-});
+// Multer-Konfiguration (im Arbeitsspeicher speichern)
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 // Route zum Hochladen von Dateien
-router.post('/upload', upload.single('datei'), (req, res) => {
-  res.send('Datei erfolgreich hochgeladen: ' + req.file.location);
+router.post('/', upload.single('file'), async (req, res) => {
+  try {
+    // Prüfen, ob eine Datei mitgesendet wurde
+    if (!req.file) {
+      return res.status(400).json({ error: 'Kein Bild bereitgestellt.' });
+    }
+
+    // Generiere zufälligen Namen für die Datei
+    const randomName = crypto.randomBytes(16).toString('hex');
+
+    // Konvertiere das hochgeladene Bild in Base64
+    const base64Image = req.file.buffer.toString('base64');
+
+    // Erstelle ein neues Dokument und speichere es in der MongoDB
+    const newCard = new Card({
+      imageName: randomName,
+      image: `data:${req.file.mimetype};base64,${base64Image}`, // Base64-Daten mit MIME-Typ
+      data: req.body.data || 'Keine Metadaten', // Zusätzliche Daten aus der Anfrage
+    });
+
+    // Speichere die Karte in der MongoDB
+    await newCard.save();
+
+    // Sende erfolgreiche Antwort zurück
+    res.status(201).json({
+      success: true,
+      message: 'Datei erfolgreich hochgeladen.',
+      card: newCard,
+    });
+  } catch (error) {
+    console.error('Fehler beim Hochladen:', error);
+    res.status(500).json({ success: false, error: 'Fehler beim Hochladen.' });
+  }
 });
 
 module.exports = router;
