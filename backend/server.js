@@ -61,7 +61,7 @@ app.post('/scrape-price', async (req, res) => {
   try {
     const { cardName } = req.body; // Kartentext aus OCR
     if (!cardName) {
-      return res.status(400).json({ error: 'CardName ist erforderlich.' });
+      return res.status(400).json({ error: 'CardName ist erforderlich.' }); //Cardname erforderlich? Nicht etwas schöneres`
     }
 
     const scraperApiUrl = `http://api.scraperapi.com?api_key=${process.env.SCRAPER_API_KEY}&url=https://www.cardmarket.com/en/Magic/Products/Search?searchString=${encodeURIComponent(
