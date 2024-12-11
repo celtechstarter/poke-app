@@ -2,20 +2,23 @@ import React, { useRef, useCallback, useState } from 'react';
 import { Flex, Text, Button } from '@radix-ui/themes';
 import Webcam from 'react-webcam';
 import axios from 'axios';
+import Tesseract from 'tesseract.js';
 
 const ScanPage = () => {
   const webcamRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
   const [statusMessage, setStatusMessage] = useState('');
-  const [ocrText, setOcrText] = useState('');
+  const [ocrResult, setOcrResult] = useState('');
+  const [isOcrRunning, setIsOcrRunning] = useState(false);
 
   // Foto aufnehmen
   const capture = useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
+    const imageSrc = webcamRef.current.getScreenshot(); // Screenshot der Webcam als Base64
     setImageSrc(imageSrc);
+    setStatusMessage(''); // Status zurücksetzen
   }, [webcamRef]);
 
-  // Bild hochladen und OCR-Text extrahieren
+  // Bild hochladen
   const saveImage = async () => {
     if (!imageSrc) {
       setStatusMessage('Kein Bild zum Hochladen vorhanden.');
@@ -24,31 +27,50 @@ const ScanPage = () => {
 
     try {
       setStatusMessage('Wird hochgeladen...');
-      const formData = new FormData();
-      const blob = await fetch(imageSrc).then((res) => res.blob());
-      formData.append('file', blob, 'screenshot.jpg');
-
-      const response = await axios.post('http://localhost:5000/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const response = await axios.post('http://localhost:5000/upload', {
+        image: imageSrc,
+        data: 'Zusätzliche Metadaten', // Optional: Metadaten
       });
 
-      if (response.data && response.data.text) {
-        setOcrText(response.data.text);
+      if (response.data) {
+        setStatusMessage('Bild erfolgreich abgespeichert!');
       }
-
-      setStatusMessage('Bild erfolgreich gespeichert!');
-      setImageSrc(null);
     } catch (error) {
       console.error('Fehler beim Speichern des Bildes:', error);
       setStatusMessage('Fehler beim Speichern des Bildes.');
     }
   };
 
-  // Bild löschen
-  const deleteImage = () => {
-    setImageSrc(null);
+  // OCR-Texterkennung starten
+  const startOcr = async () => {
+    if (!imageSrc) {
+      setOcrResult('Kein Bild für die Texterkennung verfügbar.');
+      return;
+    }
+
+    setIsOcrRunning(true);
+    setOcrResult('Texterkennung läuft...');
+
+    try {
+      const response = await axios.get('http://localhost:5000/latest'); // Abrufen des zuletzt gespeicherten Bildes
+      const { image } = response.data.card;
+
+      Tesseract.recognize(image, 'eng')
+        .then(({ data: { text } }) => {
+          setOcrResult(`Erkannter Text: ${text}`);
+        })
+        .catch((err) => {
+          console.error('Fehler bei der OCR:', err);
+          setOcrResult('Fehler bei der Texterkennung.');
+        })
+        .finally(() => {
+          setIsOcrRunning(false);
+        });
+    } catch (error) {
+      console.error('Fehler beim Laden des Bildes aus der Datenbank:', error);
+      setOcrResult('Fehler beim Laden des Bildes für die Texterkennung.');
+      setIsOcrRunning(false);
+    }
   };
 
   return (
@@ -75,7 +97,6 @@ const ScanPage = () => {
           borderRadius: '10px',
         }}
       >
-        {/* Webcam und aufgenommenes Bild nebeneinander */}
         <Flex direction="row" align="center" justify="center" gap="20px">
           <Webcam
             audio={false}
@@ -88,7 +109,6 @@ const ScanPage = () => {
               border: '2px solid #ccc',
             }}
           />
-
           {imageSrc && (
             <img
               src={imageSrc}
@@ -102,29 +122,24 @@ const ScanPage = () => {
             />
           )}
         </Flex>
-
-        {/* Buttons */}
         <Flex gap="10px">
           {!imageSrc && (
             <Button onClick={capture} size="large" variant="solid">
               Foto aufnehmen
             </Button>
           )}
-
           {imageSrc && (
             <>
-              <Button onClick={deleteImage} color="red" size="large">
-                Löschen
-              </Button>
               <Button onClick={saveImage} color="green" size="large">
                 Speichern
+              </Button>
+              <Button onClick={startOcr} color="blue" size="large" disabled={isOcrRunning}>
+                OCR starten
               </Button>
             </>
           )}
         </Flex>
       </Flex>
-
-      {/* Status Nachricht */}
       {statusMessage && (
         <Text
           size="4"
@@ -134,13 +149,14 @@ const ScanPage = () => {
           {statusMessage}
         </Text>
       )}
-
-      {/* OCR Text */}
-      {ocrText && (
-        <Flex direction="column" align="center" gap="10px">
-          <Text size="5" weight="bold">Erkannter Text:</Text>
-          <Text size="4">{ocrText}</Text>
-        </Flex>
+      {ocrResult && (
+        <Text
+          size="4"
+          weight="medium"
+          style={{ marginTop: '20px', color: ocrResult.includes('Fehler') ? 'red' : 'blue' }}
+        >
+          {ocrResult}
+        </Text>
       )}
     </Flex>
   );
