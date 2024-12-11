@@ -32,8 +32,10 @@ const ScanPage = () => {
         data: 'Zusätzliche Metadaten', // Optional: Metadaten
       });
 
-      if (response.data) {
+      if (response.data.success) {
         setStatusMessage('Bild erfolgreich abgespeichert!');
+      } else {
+        setStatusMessage('Fehler beim Speichern des Bildes.');
       }
     } catch (error) {
       console.error('Fehler beim Speichern des Bildes:', error);
@@ -53,7 +55,8 @@ const ScanPage = () => {
 
     try {
       const response = await axios.get('http://localhost:5000/latest'); // Abrufen des zuletzt gespeicherten Bildes
-      const { image } = response.data.card;
+      const { card } = response.data;
+      const { image } = card;
 
       Tesseract.recognize(image, 'eng')
         .then(({ data: { text } }) => {

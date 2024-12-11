@@ -1,39 +1,35 @@
 const express = require('express');
-const multer = require('multer');
-const crypto = require('crypto'); // Für zufällige Dateinamen
 const Card = require('../models/card'); // Dein Mongoose-Modell
 
 const router = express.Router();
 
-// Multer-Konfiguration (im Arbeitsspeicher speichern)
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
-
-// Route zum Hochladen von Dateien
-router.post('/', upload.single('file'), async (req, res) => {
+// Route zum Hochladen von Base64-Bildern
+router.post('/', async (req, res) => {
   try {
-    // Prüfen, ob eine Datei mitgesendet wurde
-    if (!req.file) {
-      return res.status(400).json({ error: 'Kein Bild bereitgestellt.' });
+    const { image, data } = req.body;
+
+    // Prüfen, ob Bild und Daten vorhanden sind
+    if (!image || !data) {
+      return res.status(400).json({ success: false, error: 'Bild oder Daten fehlen.' });
+    }
+
+    // Prüfen, ob das Bild im Base64-Format vorliegt
+    if (!image.startsWith('data:image')) {
+      return res.status(400).json({ success: false, error: 'Ungültiges Bildformat.' });
     }
 
     // Generiere zufälligen Namen für die Datei
-    const randomName = crypto.randomBytes(16).toString('hex');
-
-    // Konvertiere das hochgeladene Bild in Base64
-    const base64Image = req.file.buffer.toString('base64');
+    const randomName = require('crypto').randomBytes(16).toString('hex');
 
     // Erstelle ein neues Dokument und speichere es in der MongoDB
     const newCard = new Card({
       imageName: randomName,
-      image: `data:${req.file.mimetype};base64,${base64Image}`, // Base64-Daten mit MIME-Typ
-      data: req.body.data || 'Keine Metadaten', // Zusätzliche Daten aus der Anfrage
+      image,
+      data,
     });
 
-    // Speichere die Karte in der MongoDB
     await newCard.save();
 
-    // Sende erfolgreiche Antwort zurück
     res.status(201).json({
       success: true,
       message: 'Datei erfolgreich hochgeladen.',

@@ -81,6 +81,11 @@ app.post('/scrape-price', async (req, res) => {
   }
 });
 
+// Standardroute
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Server läuft erfolgreich!' });
+});
+
 // Fehlerbehandlung für nicht gefundene Routen
 app.use((req, res, next) => {
   res.status(404).json({ error: 'Route nicht gefunden.' });
@@ -91,9 +96,6 @@ app.use((err, req, res, next) => {
   console.error('Interner Serverfehler:', err.message);
   res.status(500).json({ error: 'Ein interner Serverfehler ist aufgetreten.' });
 });
-
-// Standardroute
-app.get('/', (req, res) => res.send('Server läuft!'));
 
 // Server starten
 app.listen(port, () => {
