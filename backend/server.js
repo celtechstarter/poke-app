@@ -9,11 +9,19 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '10mb' })); // Größere JSON-Uploads erlauben
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 
-// Debugging: Alle eingehenden Anfragen protokollieren
+// CORS-Konfiguration, um sicherzustellen, dass das Frontend Zugriff hat
+app.use(
+  cors({
+    origin: 'http://localhost:5173', // Erlaube Anfragen vom Frontend-Entwicklungsserver
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  })
+);
+
+// Debugging: Protokolliere alle eingehenden Anfragen
 app.use((req, res, next) => {
   console.log(`Incoming request: ${req.method} ${req.url}`);
   next();
@@ -58,7 +66,7 @@ app.use((req, res, next) => {
   res.status(404).json({ error: 'Route nicht gefunden.' });
 });
 
-// Fehler-Middleware für Server-Fehler
+// Fehler-Middleware für interne Server-Fehler
 app.use((err, req, res, next) => {
   console.error('Interner Serverfehler:', err.message);
   res.status(500).json({ error: 'Ein interner Serverfehler ist aufgetreten.' });

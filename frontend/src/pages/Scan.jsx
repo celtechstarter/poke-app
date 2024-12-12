@@ -44,17 +44,19 @@ const ScanPage = () => {
 
   // OCR-Texterkennung starten
   const startOcr = async () => {
-    if (!imageSrc) {
-      setOcrResult('Kein Bild für die Texterkennung verfügbar.');
-      return;
-    }
-
-    setIsOcrRunning(true);
-    setOcrResult('Texterkennung läuft...');
-
     try {
-      const response = await axios.post('http://localhost:5000/scan/ocr', { image: imageSrc });
-      const { text } = response.data;
+      setIsOcrRunning(true);
+      setOcrResult('Texterkennung läuft...');
+
+      // Anforderung an den OCR-Endpunkt
+      const response = await axios.get('http://localhost:5000/scan/latest');
+      const { image } = response.data.card;
+
+      // OCR-Erkennung direkt im Backend
+      const ocrResponse = await axios.post('http://localhost:5000/scan/ocr', {
+        image,
+      });
+      const { text } = ocrResponse.data;
 
       if (text) {
         setOcrResult(`Erkannter Text: ${text}`);
@@ -142,7 +144,12 @@ const ScanPage = () => {
               <Button onClick={saveImage} color="green" size="large">
                 Speichern
               </Button>
-              <Button onClick={startOcr} color="blue" size="large" disabled={isOcrRunning}>
+              <Button
+                onClick={startOcr}
+                color="blue"
+                size="large"
+                disabled={isOcrRunning}
+              >
                 OCR starten
               </Button>
             </>
@@ -162,7 +169,10 @@ const ScanPage = () => {
         <Text
           size="4"
           weight="medium"
-          style={{ marginTop: '20px', color: ocrResult.includes('Fehler') ? 'red' : 'blue' }}
+          style={{
+            marginTop: '20px',
+            color: ocrResult.includes('Fehler') ? 'red' : 'blue',
+          }}
         >
           {ocrResult}
         </Text>

@@ -2,7 +2,7 @@ const request = require('supertest');
 const express = require('express');
 const passport = require('passport');
 const authRouter = require('../backend/routes/auth.js'); // Hier den Pfad zu deinem Router anpassen
-const dotenv = require('../.env');
+const dotenv = require('dotenv');
 
 dotenv.config(); // Lädt die Umgebungsvariablen aus der .env-Datei
 
@@ -40,7 +40,7 @@ describe('Auth Routes', () => {
   });
 
   test('GET /google/callback sollte zur /scan-Route weiterleiten', async () => {
-    passport.authenticate.mockImplementationOnce((strategy, options) => {
+    passport.authenticate.jest.fn().mockImplementationOnce((strategy, options) => {
       return (req, res, next) => {
         req.user = { id: '123', name: 'Test User' }; // Mocking eines erfolgreichen Logins
         next();
