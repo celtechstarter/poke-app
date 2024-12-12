@@ -1,37 +1,44 @@
 const express = require('express');
-const multer = require('multer');
-const multerS3 = require('multer-s3');
-const AWS = require('aws-sdk');
+const Card = require('../models/card'); // Dein Mongoose-Modell
 
 const router = express.Router();
 
-// AWS-Konfiguration
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION,
-});
+// Route zum Hochladen von Base64-Bildern
+router.post('/', async (req, res) => {
+  try {
+    const { image, data } = req.body;
 
-const s3 = new AWS.S3();
+    // Prüfen, ob Bild und Daten vorhanden sind
+    if (!image || !data) {
+      return res.status(400).json({ success: false, error: 'Bild oder Daten fehlen.' });
+    }
 
-// Multer-S3-Setup
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: 'pokecenter',
-    acl: 'public-read',
-    metadata: function (req, file, cb) {
-      cb(null, { fieldName: file.fieldname });
-    },
-    key: function (req, file, cb) {
-      cb(null, Date.now().toString() + '-' + file.originalname);
-    },
-  }),
-});
+    // Prüfen, ob das Bild im Base64-Format vorliegt
+    if (!image.startsWith('data:image')) {
+      return res.status(400).json({ success: false, error: 'Ungültiges Bildformat.' });
+    }
 
-// Route zum Hochladen von Dateien
-router.post('/upload', upload.single('datei'), (req, res) => {
-  res.send('Datei erfolgreich hochgeladen: ' + req.file.location);
+    // Generiere zufälligen Namen für die Datei
+    const randomName = require('crypto').randomBytes(16).toString('hex');
+
+    // Erstelle ein neues Dokument und speichere es in der MongoDB
+    const newCard = new Card({
+      imageName: randomName,
+      image,
+      data,
+    });
+
+    await newCard.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Datei erfolgreich hochgeladen.',
+      card: newCard,
+    });
+  } catch (error) {
+    console.error('Fehler beim Hochladen:', error);
+    res.status(500).json({ success: false, error: 'Fehler beim Hochladen.' });
+  }
 });
 
 module.exports = router;

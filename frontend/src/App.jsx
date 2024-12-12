@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Theme } from "@radix-ui/themes";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -7,24 +7,25 @@ import ScanPage from "./pages/Scan";
 import LoginPage from "./pages/LoginPage";
 import MyCards from "./pages/MyCards";
 import Navbar from "./components/Navbar";
-import OcrPage from "./pages/OcrPage";
-
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // Überprüfen, ob der Benutzer eingeloggt ist
   useEffect(() => {
-    const user = localStorage.getItem("user"); // Überprüfen, ob der Benutzer eingeloggt ist
+    const user = localStorage.getItem("user");
     if (user) {
       setIsAuthenticated(true);
     }
   }, []);
 
+  // Login-Handler
   const handleLoginSuccess = (userData) => {
     setIsAuthenticated(true);
-    localStorage.setItem("user", JSON.stringify(userData)); // Benutzerdaten speichern
+    localStorage.setItem("user", JSON.stringify(userData)); // Speichere die Benutzerdaten
   };
 
+  // Logout-Handler
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem("user");
@@ -35,23 +36,24 @@ function App() {
       <Router>
         {isAuthenticated ? (
           <>
-          <Navbar onLogout={handleLogout} />
+            <Navbar onLogout={handleLogout} />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/scan" element={<ScanPage />} />
               <Route path="/my-cards" element={<MyCards />} />
-              <Route path="/ocr" element={<OcrPage />} />
             </Routes>
           </>
         ) : (
           <Routes>
-            <Route path="*" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
+            <Route
+              path="*"
+              element={<LoginPage onLoginSuccess={handleLoginSuccess} />}
+            />
           </Routes>
         )}
       </Router>
     </Theme>
-    
   );
 }
 

@@ -1,6 +1,7 @@
 @import "@radix-ui/themes/styles.css";
 
 /* Global Styles */
+/* Allgemeine Stile */
 body {
   font-family: var(--font-sans);
   margin: 0;
@@ -15,9 +16,11 @@ body {
   height: 100vh; /* Volle Höhe des Viewports */
   width: 100vw; /* Volle Breite des Viewports */
   z-index: -100;
+  color: #fff; /* Textfarbe standardmäßig weiß */
 }
 
 /* Navbar Styles */
+/* Navbar-Stile */
 .navbar {
   position: fixed;
   top: 0;
