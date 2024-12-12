@@ -2,7 +2,6 @@ import React, { useRef, useCallback, useState } from 'react';
 import { Flex, Text, Button } from '@radix-ui/themes';
 import Webcam from 'react-webcam';
 import axios from 'axios';
-import Tesseract from 'tesseract.js';
 
 const ScanPage = () => {
   const webcamRef = useRef(null);
@@ -15,7 +14,7 @@ const ScanPage = () => {
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot(); // Screenshot der Webcam als Base64
     setImageSrc(imageSrc);
-    setStatusMessage(''); // Status zurücksetzen
+    setStatusMessage('');
   }, [webcamRef]);
 
   // Bild hochladen
@@ -27,9 +26,9 @@ const ScanPage = () => {
 
     try {
       setStatusMessage('Wird hochgeladen...');
-      const response = await axios.post('http://localhost:5000/upload', {
+      const response = await axios.post('http://localhost:5000/scan/upload', {
         image: imageSrc,
-        data: 'Zusätzliche Metadaten', // Optional: Metadaten
+        data: 'Metadaten hier einfügen', // Optional: Metadaten
       });
 
       if (response.data.success) {
@@ -54,24 +53,18 @@ const ScanPage = () => {
     setOcrResult('Texterkennung läuft...');
 
     try {
-      const response = await axios.get('http://localhost:5000/latest'); // Abrufen des zuletzt gespeicherten Bildes
-      const { card } = response.data;
-      const { image } = card;
+      const response = await axios.post('http://localhost:5000/scan/ocr', { image: imageSrc });
+      const { text } = response.data;
 
-      Tesseract.recognize(image, 'eng')
-        .then(({ data: { text } }) => {
-          setOcrResult(`Erkannter Text: ${text}`);
-        })
-        .catch((err) => {
-          console.error('Fehler bei der OCR:', err);
-          setOcrResult('Fehler bei der Texterkennung.');
-        })
-        .finally(() => {
-          setIsOcrRunning(false);
-        });
+      if (text) {
+        setOcrResult(`Erkannter Text: ${text}`);
+      } else {
+        setOcrResult('Kein Text erkannt.');
+      }
     } catch (error) {
-      console.error('Fehler beim Laden des Bildes aus der Datenbank:', error);
-      setOcrResult('Fehler beim Laden des Bildes für die Texterkennung.');
+      console.error('Fehler bei der Texterkennung:', error);
+      setOcrResult('Fehler bei der Texterkennung.');
+    } finally {
       setIsOcrRunning(false);
     }
   };
@@ -88,7 +81,9 @@ const ScanPage = () => {
         textAlign: 'center',
       }}
     >
-      <Text size="6" weight="bold">Scannen Sie Ihre Pokémon-Karte</Text>
+      <Text size="6" weight="bold">
+        Scannen Sie Ihre Pokémon-Karte
+      </Text>
       <Flex
         direction="column"
         align="center"

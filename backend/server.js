@@ -2,9 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
-const axios = require('axios');
-const authRoutes = require('./routes/auth'); // Authentifizierungsrouten
-const uploadRoutes = require('./routes/upload'); // Upload-Route
 const scanRoutes = require('./routes/scan'); // Scan-Route
 require('dotenv').config();
 
@@ -12,8 +9,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
-app.use(express.json({ limit: '10mb' })); // JSON-Größenlimit erhöhen
-app.use(express.urlencoded({ extended: true })); // Unterstützt URL-codierte Daten
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Debugging: Alle eingehenden Anfragen protokollieren
@@ -25,7 +22,7 @@ app.use((req, res, next) => {
 // Session-Management
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'default-secret-key', // Sicherer Schlüssel
+    secret: process.env.SESSION_SECRET || 'default-secret-key',
     resave: false,
     saveUninitialized: false,
   })
@@ -40,45 +37,15 @@ mongoose
   .then(() => console.log('MongoDB verbunden'))
   .catch((err) => {
     console.error('MongoDB Verbindung fehlgeschlagen:', err);
-    process.exit(1); // Beendet den Server bei Verbindungsfehler
+    process.exit(1); // Beendet den Server, wenn die Verbindung fehlschlägt
   });
 
-// Authentifizierungsrouten
-app.use('/auth', authRoutes);
-
-// Upload- und Scan-Routen
-app.use('/upload', uploadRoutes);
+// Scan-Routen
 app.use('/scan', scanRoutes);
 
-// ScraperAPI-Route
-app.post('/scrape-price', async (req, res) => {
-  try {
-    const { cardName } = req.body; // Kartentext aus OCR
-    if (!cardName) {
-      return res.status(400).json({ error: 'CardName ist erforderlich.' });
-    }
-
-    const scraperApiUrl = `http://api.scraperapi.com?api_key=${process.env.SCRAPER_API_KEY}&url=https://www.cardmarket.com/en/Magic/Products/Search?searchString=${encodeURIComponent(
-      cardName
-    )}`;
-
-    // ScraperAPI-Anfrage
-    const response = await axios.get(scraperApiUrl);
-    const html = response.data;
-
-    const priceRegex = /<span class="price">\s*€(\d+\.\d{2})\s*<\/span>/;
-    const match = html.match(priceRegex);
-
-    if (match && match[1]) {
-      const price = match[1];
-      res.json({ cardName, price });
-    } else {
-      res.status(404).json({ error: 'Preis nicht gefunden.' });
-    }
-  } catch (error) {
-    console.error('Fehler beim Scraping-Prozess:', error);
-    res.status(500).json({ error: 'Fehler beim Scraping-Prozess.' });
-  }
+// Test-Route für das Debugging
+app.get('/scan/test', (req, res) => {
+  res.status(200).json({ message: 'Test-Route erfolgreich erreichbar!' });
 });
 
 // Standardroute

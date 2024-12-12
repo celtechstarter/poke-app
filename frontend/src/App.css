@@ -1,3 +1,4 @@
+/* Allgemeine Stile */
 body {
   font-family: var(--font-sans); /* Radix Design Token */
   margin: 0;
@@ -10,8 +11,10 @@ body {
   overflow: hidden; /* Kein Scrollen */
   height: 100vh; /* Volle Höhe des Viewports */
   width: 100vw; /* Volle Breite des Viewports */
+  color: #fff; /* Textfarbe standardmäßig weiß */
 }
 
+/* Navbar-Stile */
 .navbar {
   position: fixed;
   top: 0;
@@ -19,7 +22,7 @@ body {
   background-color: #2e2e2e;
   height: 60px;
   display: flex;
-  justify-content: center; /* Zentriert die Links */
+  justify-content: space-between; /* Links und Logout-Button an den Rändern */
   align-items: center;
   padding: 0 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -32,15 +35,16 @@ body {
   font-weight: bold;
   font-size: 16px;
   margin: 0 15px; /* Abstand zwischen den Links */
+  transition: color 0.3s ease;
 }
 
 .navbar a:hover {
   color: pink;
-  transition: color 0.3s ease;
 }
 
+/* Logout-Button-Stil */
 .navbar .logout-container {
-  margin-left: 50px; /* Erhöht den Abstand nach links */
+  margin-right: 20px; /* Abstand nach rechts */
 }
 
 .navbar button {
@@ -52,10 +56,89 @@ body {
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .navbar button:hover {
   background-color: red;
   color: white;
-  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Flexibles Container-Layout */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Container hat mindestens die Höhe des Viewports */
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5); /* Halbtransparenter Hintergrund */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Buttons */
+.button-primary {
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-primary:hover {
+  background-color: #0056b3;
+  transform: scale(1.05); /* Leichter Zoom-Effekt */
+}
+
+.button-secondary {
+  color: #333;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-secondary:hover {
+  background-color: #e2e6ea;
+  transform: scale(1.05); /* Leichter Zoom-Effekt */
+}
+
+/* Statusmeldungen */
+.status-success {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.status-error {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Webcam- und Bildvorschau-Stile */
+.webcam-preview {
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  width: 350px;
+  height: auto;
+  margin: 10px;
+}
+
+.image-preview {
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  width: 350px;
+  height: auto;
+  margin: 10px;
 }
