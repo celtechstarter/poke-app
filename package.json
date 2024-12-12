@@ -2,5 +2,10 @@
   "dependencies": {
     "dotenv": "^16.4.6",
     "mongoose": "^8.8.3"
+  },
+  "devDependencies": {
+    "express-session": "^1.18.1",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }
