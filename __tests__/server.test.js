@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { connectToDatabase, closeDatabase } = require('../backend/server.js'); // Verbindungsfunktionen
 require('dotenv').config(); // Umgebungsvariablen laden
 
+
 describe('MongoDB-Verbindung', () => {
   beforeAll(async () => {
     // Verbindet sich mit MongoDB vor den Tests
@@ -20,3 +21,5 @@ describe('MongoDB-Verbindung', () => {
     expect(connectionState).toBe(1); // Überprüfe, ob die Verbindung hergestellt wurde
   });
 });
+
+module.exports = { connectToDatabase, closeDatabase };

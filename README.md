@@ -1,14 +1,14 @@
-# Poke-App
+# PokeScan
 
-Poke-App ist eine Webanwendung, die es Benutzern ermöglicht, durch alle existierenden Pokémon zu stöbern, deren Bewegungen einzusehen und Kämpfe mit anderen Benutzern auszutragen. Benutzer können einen Kampfraum erstellen und rundenbasierte Kämpfe mit ihren jeweiligen Pokémon über MQTT über WebSockets durchführen. :contentReference[oaicite:0]{index=0}
+PokeScan ist eine Applikation, die es Benutzern ermöglicht, eine Pokémon-Karte zu scannen und deren gegenwärtigen Marktpreiswert zu ermitteln.
+Diese Ergebnisse können immer wieder eingesehen und genutzt werden, um Karten, die man nicht mehr persönlich benutzen will, in einen angemessenen Gewinn zu verwandeln!
 
 
 ## Features
 
-- **Pokémon-Datenbank**: Durchsuchen Sie eine umfassende Liste aller Pokémon mit detaillierten Informationen zu jedem.
-- **Kampfmodus**: Treten Sie in rundenbasierten Kämpfen gegen andere Benutzer an.
-- **Echtzeit-Kommunikation**: Nutzen Sie MQTT über WebSockets für schnelle und zuverlässige Datenübertragung.
-- **Chat-Funktion**: Kommunizieren Sie während des Kampfes mit Ihrem Gegner.
+- **Karten-Scanner:**: Halten sie einfach und bequem ihre Karte in ihre integrierte Webcam und drücken Sie ansonsten nur einen Knopf, und der Rest wird erledigt.
+- **Echtzeitgetreuer Marktwert**: Es wird nach Scannen der Karte der aktuelle Marktpreis ermittelt und für Sie auf dem Bildschirm ausgegeben.
+- **Auf Datenbank sichern**: Die gescannte Karte wird auf einer Datenbank gesichert und kann jederzeit wieder aufgerufen werden, was mehrmaliges Scannen vermeidet.
 
 
 ## Installation
@@ -17,14 +17,18 @@ Poke-App ist eine Webanwendung, die es Benutzern ermöglicht, durch alle existie
    ```bash
    git clone https://github.com/celtechstarter/poke-app.git
 
-In das Projektverzeichnis wechseln:
-cd poke-app
+2. **In das Projektverzeichnis wechseln**:
+	```bash
+	cd ./poke-app
 
-Abhängigkeiten installieren:
-Code kopieren
+3. **Abhängigkeiten installieren**:
+	```bash
+    cd ./frontend
+    npm install // warten bis installiert wurde
+    cd ..
+    cd ./backend
+    npm install
 
-Backend starten:
-npm install
 
 Backend starten:
 cd backend
@@ -34,30 +38,31 @@ Frontend starten:
 cd frontend
 npm run dev
 
+**4. Ausführung**
+    
+    ```bash
+    node server.js //falls Sie noch nach der Installation im Backend-Ordner sind, ansonsten navigieren sie 	dahin zurück
+    cd ..
+    cd ./frontend
+    npm run
 
 
-**4. Nutzung**
-
-Erklären Sie, wie man die Anwendung verwendet:
-
-```markdown
 ## Nutzung
 
-- **Pokémon durchsuchen**: Starten Sie die Anwendung und navigieren Sie zur Pokémon-Liste, um durch alle verfügbaren Pokémon zu stöbern.
-- **Kampf erstellen**: Gehen Sie zum Kampfbereich und erstellen Sie einen neuen Kampfraum oder treten Sie einem bestehenden bei.
-- **Kampf durchführen**: Wählen Sie Ihr Pokémon und führen Sie rundenbasierte Angriffe gegen Ihren Gegner aus.
-- **Chatten**: Nutzen Sie die Chat-Funktion, um während des Kampfes mit Ihrem Gegner zu kommunizieren.
-
+- **Login** - Loggen sie sich simpel mit Ihrem Google-Account per Knopfdruck ein (Ein Google-Account wird leider vorausgesetzt).
+- **Scannen** - Mit einem Knopfdruck wird Ihre Webcam geöffnet, danach halten Sie ihre Pokémon-Karte in die Webcam und drücken Speichern.
+- **Speichern** - Die Karte wird in einer Datenbank abgelegt, so dass sie wieder aufgerufen werden kann, sollten Sie noch einmal die Informationen über diese Karte benötigen.
+- **OPR** - Scannen Sie die Karte und lassen Sie sich für die Karte den aktuellen Preiswert ermitteln aus vertrauenswürdigen Quellen.
 
 ## Technologie-Stack
 
-- **Frontend**: React, Redux, Radix UI
-- **Backend**: Node.js, Express
+- **Frontend**: React, Redux, Radix UI, Vite, Axios, Mongoose, Multer(-S3), Tesseract
+- **Backend**: Node.js, Express(-Session)
 - **Echtzeit-Kommunikation**: MQTT über WebSockets
 - **Datenbank**: MongoDB
 
 
-## Beitrag leisten
+## Einen Beitrag leisten?
 
 Beiträge sind willkommen! Bitte folgen Sie diesen Schritten:
 
@@ -66,26 +71,25 @@ Beiträge sind willkommen! Bitte folgen Sie diesen Schritten:
    ```bash
    git checkout -b feature/neues-feature
 
-   Nehmen Sie Ihre Änderungen vor und committen Sie sie:
+Nehmen Sie Ihre Änderungen vor und committen Sie sie:
 
-git commit -m 'Füge neues Feature hinzu'
+	```bash
+    git commit -m 'Füge neues Feature hinzu'
 
 Pushen Sie den Branch:
 
-git push origin feature/neues-feature
+	```bash
+    git push origin feature/neues-feature
 
 
 
 **7. Lizenz**
 
-Geben Sie die Lizenzbedingungen Ihres Projekts an:
 
-```markdown
 ## Lizenz
 
 Dieses Projekt steht unter der [MIT-Lizenz](LICENSE).
 
 ## Kontakt
 
-Bei Fragen oder Feedback wenden Sie sich bitte an [marcel.welk87@gmail.com].
-
+Bei Fragen oder Feedback wenden Sie sich bitte an [marcel.welk87@gmail.com](mailto:marcel.welk87@gmail.com), [sawatzkychristian@gmail.com](mailto:sawatzkychristian@gmail.com), oder [Willy].
