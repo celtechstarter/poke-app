@@ -92,4 +92,4 @@ Dieses Projekt steht unter der [MIT-Lizenz](LICENSE).
 
 ## Kontakt
 
-Bei Fragen oder Feedback wenden Sie sich bitte an [marcel.welk87@gmail.com](mailto:marcel.welk87@gmail.com), [sawatzkychristian@gmail.com](mailto:sawatzkychristian@gmail.com), oder [Willy].
+Bei Fragen oder Feedback wenden Sie sich bitte an [marcel.welk87@gmail.com](mailto:marcel.welk87@gmail.com), [sawatzkychristian@gmail.com](mailto:sawatzkychristian@gmail.com), oder [willellwart@gmail.com](mailto:willellwart@gmail.com).
