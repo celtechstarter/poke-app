@@ -1,0 +1,33 @@
+.slideshow-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 300px; /* Höhe des Containers passend zur Kartengröße */
+    margin: 20px auto;
+  }
+  
+  .slideshow-track {
+    display: flex;
+    will-change: transform;
+  }
+  
+  .card-box {
+    width: 200px; /* Reduzierte Breite der Karten */
+    height: 280px; /* Reduzierte Höhe der Karten */
+    margin: 10px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  
+  .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Bildgröße wird angepasst */
+    border-radius: 8px;
+  }
+  
