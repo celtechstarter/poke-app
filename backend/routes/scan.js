@@ -20,9 +20,7 @@ router.post("/ocr", async (req, res) => {
     console.log("OCR gestartet mit Bild:", image);
 
     // OCR ausführen
-    const {
-      data: { text },
-    } = await Tesseract.recognize(image, "deu", {
+    const { data: { text } } = await Tesseract.recognize(image, "deu", {
       logger: (info) => console.log(info), // Fortschritt protokollieren
     });
 
@@ -35,7 +33,7 @@ router.post("/ocr", async (req, res) => {
   }
 });
 
-// Google-Suche mit ScraperAPI
+// ScraperAPI-Route für Google-Suche nach Cardmarket-Links
 router.post("/scrape", async (req, res) => {
   const { query } = req.body;
 
@@ -60,15 +58,14 @@ router.post("/scrape", async (req, res) => {
     // Anfrage an ScraperAPI senden
     const response = await axios.get(scraperURL);
 
-    // Links aus dem Google-HTML extrahieren
-    const links = [
-      ...response.data.matchAll(/<a href="\/url\?q=(.*?)&amp;/g),
-    ].map((match) => decodeURIComponent(match[1]));
-
-    // Filtern nach cardmarket.com
-    const cardmarketLinks = links.filter((link) =>
-      link.includes("cardmarket.com")
-    );
+    // Links aus der Google-HTML-Antwort extrahieren
+    const links = response.data.match(/<a href="\/url\?q=(.*?)&amp;/g) || [];
+    const cardmarketLinks = links
+      .map((link) => {
+        const match = link.match(/q=(.*?)&/);
+        return match ? decodeURIComponent(match[1]) : null;
+      })
+      .filter((link) => link && link.includes("cardmarket.com"));
 
     if (cardmarketLinks.length > 0) {
       res.status(200).json({ success: true, links: cardmarketLinks });
@@ -86,16 +83,12 @@ router.post("/upload", async (req, res) => {
   const { image, data } = req.body;
 
   if (!image || !data) {
-    return res
-      .status(400)
-      .json({ error: "Bild oder Daten fehlen." });
+    return res.status(400).json({ error: "Bild oder Daten fehlen." });
   }
 
   try {
     if (!image.startsWith("data:image")) {
-      return res
-        .status(400)
-        .json({ error: "Ungültiges Bildformat." });
+      return res.status(400).json({ error: "Ungültiges Bildformat." });
     }
 
     const newCard = new Card({ image, data });
@@ -118,9 +111,7 @@ router.get("/latest", async (req, res) => {
     const latestCard = await Card.findOne().sort({ createdAt: -1 });
 
     if (!latestCard) {
-      return res
-        .status(404)
-        .json({ error: "Kein Bild in der Datenbank gefunden." });
+      return res.status(404).json({ error: "Kein Bild in der Datenbank gefunden." });
     }
 
     res.status(200).json({

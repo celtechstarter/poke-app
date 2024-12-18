@@ -6,7 +6,7 @@ body {
   font-family: var(--font-sans);
   margin: 0;
   padding: 0;
-  background-image: url('/images/logo1.jpg'); /* Hintergrundbild */
+  background-image: url('/images/logo1.png'); /* Hintergrundbild */
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -16,7 +16,7 @@ body {
   height: 100vh; /* Volle Höhe des Viewports */
   width: 100vw; /* Volle Breite des Viewports */
   z-index: -100;
-  color: #fff; /* Textfarbe standardmäßig weiß */
+  color: #141414; /* Textfarbe standardmäßig weiß */
 }
 
 /* Navbar Styles */
