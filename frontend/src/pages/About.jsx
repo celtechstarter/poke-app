@@ -138,6 +138,14 @@ const About = () => {
               <Text as="div" size="3" color="gray">
                 DevOps Engineering
               </Text>
+              <Text as="p" size="2" mt="3" color="gray">
+              Als Frontend-Entwickler bin ich verantwortlich für die Benutzeroberfläche des Pokémon-Karten-Scanners. 
+              Ich habe das Frontend mit React umgesetzt und dabei Radix UI für ein modernes und interaktives Design integriert. 
+              Ein besonderer Fokus lag auf der CSS-Umsetzung, insbesondere der korrekten Hintergrundgestaltung mit fixierten Elementen, 
+              z-index-Hierarchien und responsive Anpassungen für verschiedene Bildschirmgrößen. 
+              Zusätzlich habe ich Dateiupload-Funktionen und die Kommunikation mit dem Backend über Fetch realisiert.
+              </Text>
+
               <Flex mt="3" gap="2" justify="center">
               <Button
               as="a"
@@ -170,6 +178,13 @@ const About = () => {
           </Flex>
         </Card>
       </Box>
+      <text>
+        Wir sind eine Drei-Mann-Gruppe von Techstarter GmbH, welches dieses hier als Abschlussprojekt für die Ausbildung vorstellen.
+        Dabei haben wir als leidenschaftliche Spieler uns dazu entschlossen, mit dieser App anderen Spielern zu helfen, die ihre Karten
+        eventuell in Geld verwandeln wollen.
+        Wir haben Januar 2024 gemeinsam die Ausbildung bei Techstarter begonnen und beenden dieses nun auch gemeinsam, dabei unsere gegenseitigen Schwächen
+        mit jeweiligen Stärken ausgleichend.
+      </text>
     </Flex>
   );
 };
