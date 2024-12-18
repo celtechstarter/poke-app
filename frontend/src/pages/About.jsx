@@ -1,9 +1,14 @@
 import React from 'react';
-import { Flex, Text, Button, Box, Card, Avatar } from "@radix-ui/themes"; // Sicherstellen, dass alle benötigten Komponenten importiert sind
+import { Flex, Text, Button, Box, Card, Avatar } from "@radix-ui/themes";
 
 const About = () => {
   return (
-    <div>
+    <Flex 
+    direction="column" // Vertikale Ausrichtung
+    justify="center"   // Vertikale Zentrierung
+    align="center"     // Horizontale Zentrierung
+    style={{ minHeight: '100vh' }} // Stellt sicher, dass der Container die volle Höhe des Bildschirms einnimmt
+    >
       <h1>Über uns</h1>
       <p>Informationen über die Pokémon Karten-Scanner App.</p>
 
@@ -13,7 +18,7 @@ const About = () => {
           <Flex gap="3" align="center">
             <Avatar
               size="3"
-              src="/images/christian.png" // Korrigierte Pfadangabe für das Bild
+              src="/images/christian.png"
               radius="full"
               fallback="T"
             />
@@ -41,7 +46,7 @@ const About = () => {
           <Flex gap="3" align="center">
             <Avatar
               size="3"
-              src="/images/marcel.png" // Korrigierte Pfadangabe für das Bild
+              src="/images/marcel.png"
               radius="full"
               fallback="T"
             />
@@ -84,7 +89,7 @@ const About = () => {
           </Flex>
         </Card>
       </Box>
-    </div>
+    </Flex>
   );
 };
 
