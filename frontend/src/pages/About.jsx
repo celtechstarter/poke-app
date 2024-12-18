@@ -91,9 +91,10 @@ const About = () => {
       <ScrollArea className="scroll-container">
         <Container size="3" px="4" py="5">
           <Box className="section-box">
-            <Text className="project-title">PokeScan – Ein innovatives Projekt</Text>
+            <Text className="project-title">PokeScan Technologies – Scan your Pokemon Cards</Text>
+            <br />
             <Text className="project-description">
-              PokeScan nutzt modernste Technologien, um Pokémon-Karten mithilfe von OCR-Texterkennung zu analysieren und deren Informationen effizient darzustellen.
+              PokeScan nutzt modernste Technologien, um Pokémon-Karten mithilfe von AWS Textract zu analysieren und deren Kartenpreise effizient darzustellen.
             </Text>
           </Box>
 
