@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Text, Button, Box, Card, Avatar } from "@radix-ui/themes"; // Sicherstellen, dass alle benötigten Komponenten importiert sind
+import { Flex, Text, Button, Box, Card, Avatar } from '@radix-ui/themes';
 
 const About = () => {
   return (
@@ -13,29 +13,55 @@ const About = () => {
       <p>Informationen über die Pokémon Karten-Scanner App.</p>
 
       {/* Christian Sawatzky */}
-      <Box maxWidth="240px" style={{ marginBottom: '20px' }}>
+      <Box maxWidth="350px" style={{ marginBottom: '20px' }}>
         <Card>
           <Flex gap="3" align="center">
             <Avatar
-              size="3"
+              size="5"
               src="/images/christian.png"
               radius="full"
-              fallback="T"
+              fallback="M"
             />
             <Box>
-              <Text as="div" size="2" weight="bold">
+              <Text as="div" size="4" weight="bold">
                 Christian Sawatzky
               </Text>
-              <Text as="div" size="2" color="gray">
-                DevOps Engineering
+              <Text as="div" size="3" weight="bold">
+                DevOps Engineer
               </Text>
-              <a
-                href="https://www.linkedin.com/in/christian-sawatzky-78b985341/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Text as="p" size="2" mt="3" color="gray">
+              Ich bin hauptverantwortlich für die Einrichtung und Wartung externer Cloud-Software 
+              wie die Datenbank, die Server von AWS, den S3-Bucket etc.
+              sowie das Assistieren des Designs und das Schreiben des Readme-Datei.
+              </Text>
+            <Flex mt="3" gap="2" justify="center">
+              <Button
+              as="a"
+              href="https://github.com/Chrisawatzky"
+              target="_blank"
+              variant="solid"
+              color="gray"
               >
-                LinkedIn
-              </a>
+              GitHub
+            </Button>
+            <Button
+              as="a"
+              href="mailto:sawatzkychristian@gmail.com"
+              variant="solid"
+              color="green"
+            >
+              Kontakt
+            </Button>
+            <Button
+              as="a"
+              href="https://www.linkedin.com/in/christian-sawatzky-78b985341/"
+              target="_blank"
+              variant="solid"
+              color="blue"
+            >
+              LinkedIn
+            </Button> 
+            </Flex>
             </Box>
           </Flex>
         </Card>
@@ -46,8 +72,8 @@ const About = () => {
         <Card>
           <Flex gap="3" align="center">
             <Avatar
-              size="3"
-              src="/images/marcel.png" // Korrigierte Pfadangabe für das Bild
+              size="5"
+              src="/images/marcel.png"
               radius="full"
               fallback="M"
             />
@@ -63,21 +89,6 @@ const About = () => {
             mit AWS. Zudem habe ich Tesseract.js für Texterkennung und externe APIs 
             für Datenverarbeitung eingebunden.
           </Text>
-          {/* Technologie-Badges */}
-          <Flex gap="2" mt="3" wrap="wrap">
-            <Badge color="green">React.js</Badge>
-            <Badge color="blue">Node.js</Badge>
-            <Badge color="purple">MongoDB</Badge>
-            <Badge color="orange">Tesseract.js</Badge>
-            <Badge color="yellow">AWS S3</Badge>
-            <Badge color="teal">AWS EC2</Badge>
-            <Badge color="gray">Express.js</Badge>
-            <Badge color="red">ScraperAPI</Badge>
-            <Badge color="violet">Axios</Badge>
-            <Badge color="pink">Docker</Badge>
-            <Badge color="cyan">Radix UI</Badge>
-            <Badge color="indigo">Git & GitHub</Badge>
-          </Flex>
           {/* Buttons */}
           <Flex mt="3" gap="2" justify="center">
             <Button
@@ -111,7 +122,7 @@ const About = () => {
       </Box>
 
       {/* Willy Ellwart */}
-      <Box maxWidth="240px">
+      <Box maxWidth="350px" style={{ marginBottom: '20px' }}>
         <Card>
           <Flex gap="3" align="center">
             <Avatar
@@ -121,19 +132,40 @@ const About = () => {
               fallback="T"
             />
             <Box>
-              <Text as="div" size="2" weight="bold">
-                Willy Ellwart
+              <Text as="div" size="4" weight="bold">
+                Willy Ellhart
               </Text>
-              <Text as="div" size="2" color="gray">
+              <Text as="div" size="3" color="gray">
                 DevOps Engineering
               </Text>
-              <a
-                href="https://www.linkedin.com/in/willy-ellwart-b1977a2b8/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Flex mt="3" gap="2" justify="center">
+              <Button
+              as="a"
+              href="https://github.com/WillyEllwart"
+              target="_blank"
+              variant="solid"
+              color="gray"
               >
-                LinkedIn
-              </a>
+              GitHub
+            </Button>
+            <Button
+              as="a"
+              href="mailto:willellwart@gmail.com"
+              variant="solid"
+              color="green"
+            >
+              Kontakt
+            </Button>
+            <Button
+              as="a"
+              href="https://www.linkedin.com/in/willy-ellwart-b1977a2b8/"
+              target="_blank"
+              variant="solid"
+              color="blue"
+            >
+              LinkedIn
+            </Button> 
+            </Flex>
             </Box>
           </Flex>
         </Card>
