@@ -34,8 +34,7 @@ function App() {
 
   return (
 
-    <div className=" background">
-    {/* Hintergrund-Container */}
+    
  
 
 
@@ -45,7 +44,8 @@ function App() {
            radius="medium" 
            scaling="95%">
       <Router>
-      <div className="content">
+      <div className="content background">
+
         {isAuthenticated ? (
           <>
             <Navbar onLogout={handleLogout} />
@@ -67,7 +67,7 @@ function App() {
       </div>
       </Router>
     </Theme>
-    </div>
+  
   );
 }
 

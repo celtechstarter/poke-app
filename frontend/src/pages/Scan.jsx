@@ -96,6 +96,7 @@ const ScanPage = () => {
   };
 
   return (
+    
     <Flex
       direction="column"
       align="center"
@@ -211,6 +212,7 @@ const ScanPage = () => {
         </div>
       )}
     </Flex>
+    
   );
 };
 
