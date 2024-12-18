@@ -9,7 +9,7 @@ const WebCamComponent = ({ webcamRef, capture }) => (
       screenshotFormat="image/jpeg"
       width={350}
       height={350}
-      css={{ borderRadius: '8px', border: '2px solid #ddd' }}
+      css={{ borderRadius: '8px', border: '2px solid #ddd', zIndex: 10 }}
     />
     <Button onClick={capture} variant="solid" color="blue">
       Foto aufnehmen

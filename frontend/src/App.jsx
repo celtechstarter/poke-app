@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import MyCards from "./pages/MyCards";
 import Navbar from "./components/Navbar";
 
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -32,8 +33,19 @@ function App() {
   };
 
   return (
-    <Theme appearance="light" accentColor="crimson" grayColor="sand" radius="medium" scaling="95%">
+
+    <div className=" background">
+    {/* Hintergrund-Container */}
+ 
+
+
+    <Theme appearance="light" 
+           accentColor="crimson" 
+           grayColor="sand" 
+           radius="medium" 
+           scaling="95%">
       <Router>
+      <div className="content">
         {isAuthenticated ? (
           <>
             <Navbar onLogout={handleLogout} />
@@ -52,8 +64,10 @@ function App() {
             />
           </Routes>
         )}
+      </div>
       </Router>
     </Theme>
+    </div>
   );
 }
 

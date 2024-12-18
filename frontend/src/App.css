@@ -1,26 +1,57 @@
 @import "@radix-ui/themes/styles.css";
 
 /* Global Styles */
-/* Allgemeine Stile */
-body {
-  font-family: var(--font-sans);
+
+html, body {
   margin: 0;
   padding: 0;
-  background-image: url('/images/logo1.png'); /* Hintergrundbild */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-sans); /* Grundschrift aus Radix */
+}
+
+
+.app-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+
+
+
+.background {
+  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)),
+              url("/images/logo1.png"); 
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
-  opacity: 0.9;
-  overflow: hidden; /* Kein Scrollen */
-  height: 100vh; /* Volle Höhe des Viewports */
-  width: 100vw; /* Volle Breite des Viewports */
-  z-index: -100;
-  color: #141414; /* Textfarbe standardmäßig weiß */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10; /* Hintergrund bleibt hinter allen Inhalten */
 }
 
-/* Navbar Styles */
-/* Navbar-Stile */
+/* Inhalt Container (NEU für klare Trennung) */
+.content {
+  position: relative;
+  z-index: 10; 
+  padding-top: 80px; /* Platz für die Navbar */
+  width: 100%;
+  height: 100%;
+  overflow-y: auto; /* Scrollen bei Bedarf */
+}
+
+
+
+
 .navbar {
   position: fixed;
   top: 0;
@@ -34,6 +65,7 @@ body {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 1000;
 }
+
 
 /* Rotierendes Logo Container */
 .rotating-logo-container {
@@ -61,17 +93,7 @@ body {
   }
 }
 
-/* Logo Text (falls verwendet) */
-.navbar .logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 10px;
-  background: linear-gradient(245deg, #ffffff, #898989); /* Chrome-Effekt */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
+
 
 /* Navbar Links */
 .navbar .links {
