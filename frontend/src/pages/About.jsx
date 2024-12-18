@@ -56,66 +56,74 @@ const About = () => {
     { name: "Marian Tugui", role: "Teaching Assist", description: "Betreuung und Nachbereitung von Inhalten.", image: "/images/marian.webp" },
   ];
 
-  const renderCard = (member, cardClass) => (
+  const renderCard = (member, cardClass, showButtons = true) => (
     <Box key={member.name} className={`card-container ${cardClass}`}>
       <Card className="card-content">
         <Flex direction="column" align="center" gap="2" p="3">
           <Avatar size="5" src={member.image} radius="full" className="card-avatar" />
-          <Box textAlign="center">
+          <Box textAlign="center" className="name-role-box">
             <Text size="4" weight="bold" className="card-title">{member.name}</Text>
             <Text size="3" mt="1" className="card-role">{member.role}</Text>
           </Box>
           <Text as="p" size="2" mt="2" textAlign="center" className="card-description">
             {member.description}
           </Text>
-          <Flex mt="3" gap="2" justify="center">
-            <Button asChild className="button github-button">
-              <a href={member.github || "#"} target="_blank" rel="noopener noreferrer">GitHub</a>
-            </Button>
-            <Button asChild className="button contact-button">
-              <a href={member.email || "#"} rel="noopener noreferrer">Kontakt</a>
-            </Button>
-            <Button asChild className="button linkedin-button">
-              <a href={member.linkedin || "#"} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            </Button>
-          </Flex>
+          {showButtons && (
+            <Flex mt="3" gap="2" justify="center">
+              <Button asChild className="button github-button">
+                <a href={member.github || "#"} target="_blank" rel="noopener noreferrer">GitHub</a>
+              </Button>
+              <Button asChild className="button contact-button">
+                <a href={member.email || "#"} rel="noopener noreferrer">Kontakt</a>
+              </Button>
+              <Button asChild className="button linkedin-button">
+                <a href={member.linkedin || "#"} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              </Button>
+            </Flex>
+          )}
         </Flex>
       </Card>
     </Box>
   );
 
   return (
-    <ScrollArea className="scroll-container">
-      <Container size="3" px="4" py="5">
-        <Box className="section-box">
-          <Text className="project-title">PokeScan – Ein innovatives Projekt</Text>
-          <Text className="project-description">
-            PokeScan nutzt modernste Technologien, um Pokémon-Karten mithilfe von OCR-Texterkennung zu analysieren und deren Informationen effizient darzustellen.
-          </Text>
-        </Box>
+    <Box className="about-container">
+      <ScrollArea className="scroll-container">
+        <Container size="3" px="4" py="5">
+          <Box className="section-box">
+            <Text className="project-title">PokeScan – Ein innovatives Projekt</Text>
+            <Text className="project-description">
+              PokeScan nutzt modernste Technologien, um Pokémon-Karten mithilfe von OCR-Texterkennung zu analysieren und deren Informationen effizient darzustellen.
+            </Text>
+          </Box>
 
-        <Box className="section-box">
-          <Text className="section-title">Unser Team</Text>
-          <Flex wrap="wrap" justify="center" gap="6">
-            {teamMembers.map((member) => renderCard(member, "team-card"))}
-          </Flex>
-        </Box>
+          <Box className="section-box">
+            <Text className="section-title">Unser Team</Text>
+            <Flex wrap="wrap" justify="center" gap="6">
+              {teamMembers.map((member) => renderCard(member, "team-card", true))}
+            </Flex>
+          </Box>
 
-        <Box className="section-box">
-          <Text className="section-title">Unsere Trainer</Text>
-          <Flex wrap="wrap" justify="center" gap="6">
-            {trainers.map((member) => renderCard(member, "trainer-card"))}
-          </Flex>
-        </Box>
+          <Box className="section-box">
+            <Text className="section-title">Unsere Trainer</Text>
+            <Flex wrap="wrap" justify="center" gap="6">
+              {trainers.map((member) => renderCard(member, "trainer-card", false))}
+            </Flex>
+          </Box>
 
-        <Box className="section-box">
-          <Text className="section-title">Unsere Teaching Assists</Text>
-          <Flex wrap="wrap" justify="center" gap="6">
-            {teachingAssists.map((member) => renderCard(member, "teaching-card"))}
-          </Flex>
-        </Box>
-      </Container>
-    </ScrollArea>
+          <Box className="section-box">
+            <Text className="section-title">Unsere Teaching Assists</Text>
+            <Flex wrap="wrap" justify="center" gap="6">
+              {teachingAssists.map((member) => renderCard(member, "teaching-card", false))}
+            </Flex>
+          </Box>
+        </Container>
+      </ScrollArea>
+      <Box className="footer-box">
+        <Text size="3" weight="bold">© 2024 PokeScan Technologies</Text>
+        <Text size="3">Sponsor: PokéScan Technologies</Text>
+      </Box>
+    </Box>
   );
 };
 
