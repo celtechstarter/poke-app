@@ -16,9 +16,7 @@ const Home = () => {
       </Text>
       {/* Integrierte Slideshow-Komponente */}
       <Slideshow />
-      <Button variant="solid" onClick={() => (window.location.href = "/scan")}>
-        Zur Scan-Seite
-      </Button>
+     
     </Flex>
   );
 };

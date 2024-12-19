@@ -1,176 +1,130 @@
-import React from 'react';
-import { Flex, Text, Button, Box, Card, Avatar } from '@radix-ui/themes';
+import React from "react";
+import {
+  Flex,
+  Text,
+  Button,
+  Box,
+  Card,
+  Avatar,
+  ScrollArea,
+  Container,
+} from "@radix-ui/themes";
+import "../components/About.css";
 
 const About = () => {
-  return (
-    <Flex 
-    direction="column" // Vertikale Ausrichtung
-    justify="center"   // Vertikale Zentrierung
-    align="center"     // Horizontale Zentrierung
-    style={{ minHeight: '100vh',  overflow: 'auto' }} // Stellt sicher, dass der Container die volle Höhe des Bildschirms einnimmt
-    >
-      <h1>Über uns</h1>
-      <p>Informationen über die Pokémon Karten-Scanner App.</p>
+  const teamMembers = [
+    {
+      name: "Christian Sawatzky",
+      role: "DevOps Engineer",
+      description:
+        "Verantwortlich für AWS-Serverdienste, Datenbankintegration und Support im Design.",
+      image: "/images/christian.png",
+      github: "https://github.com/Chrisawatzky",
+      email: "mailto:sawatzkychristian@gmail.com",
+      linkedin: "https://linkedin.com",
+    },
+    {
+      name: "Marcel Welk",
+      role: "Full Stack Entwickler & Projektleiter",
+      description:
+        "Architektur, Frontend mit React, Backend mit Node.js, Texterkennung mit Tesseract.js und AWS-Integration.",
+      image: "/images/marcel.png",
+      github: "https://github.com/celtechstarter",
+      email: "mailto:marcel.welk87@gmail.com",
+      linkedin: "https://linkedin.com",
+    },
+    {
+      name: "Willy Ellwart",
+      role: "DevOps Engineer",
+      description:
+        "Datenbankverwaltung, API-Routing und Konfiguration von Cloud-Serverdiensten.",
+      image: "/images/willy.png",
+      github: "https://github.com/WillyEllwart",
+      email: "mailto:willellwart@gmail.com",
+      linkedin: "https://linkedin.com",
+    },
+  ];
 
-      {/* Christian Sawatzky */}
-      <Box maxWidth="350px" style={{ marginBottom: '20px' }}>
-        <Card>
-          <Flex gap="3" align="center">
-            <Avatar
-              size="5"
-              src="/images/christian.png"
-              radius="full"
-              fallback="M"
-            />
-            <Box>
-              <Text as="div" size="4" weight="bold">
-                Christian Sawatzky
-              </Text>
-              <Text as="div" size="3" weight="bold">
-                DevOps Engineer
-              </Text>
-              <Text as="p" size="2" mt="3" color="gray">
-              Ich bin hauptverantwortlich für die Einrichtung und Wartung externer Cloud-Software 
-              wie die Datenbank, die Server von AWS, den S3-Bucket etc.
-              sowie das Assistieren des Designs und das Schreiben des Readme-Datei.
-              </Text>
-            <Flex mt="3" gap="2" justify="center">
-              <Button
-              as="a"
-              href="https://github.com/Chrisawatzky"
-              target="_blank"
-              variant="solid"
-              color="gray"
-              >
-              GitHub
-            </Button>
-            <Button
-              as="a"
-              href="mailto:sawatzkychristian@gmail.com"
-              variant="solid"
-              color="green"
-            >
-              Kontakt
-            </Button>
-            <Button
-              as="a"
-              href="https://www.linkedin.com/in/christian-sawatzky-78b985341/"
-              target="_blank"
-              variant="solid"
-              color="blue"
-            >
-              LinkedIn
-            </Button> 
-            </Flex>
-            </Box>
-          </Flex>
-        </Card>
-      </Box>
+  const trainers = [
+    { name: "Suheib Marzouka", role: "Trainer", description: "Trainer für PokeScan-Workshops.", image: "/images/suheib.webp" },
+    { name: "Mete Adic", role: "Trainer", description: "Trainer für technische Schulungen.", image: "/images/mete.webp" },
+    { name: "Hubertus Knobling", role: "Trainer", description: "Unterstützung im praktischen Bereich.", image: "/images/hubertus.webp" },
+  ];
 
-      {/* Marcel Welk - Angepasst mit erweiterten Informationen */}
-      <Box maxWidth="350px" p="5" borderRadius="lg" shadow="lg" style={{ marginBottom: '20px' }}>
-        <Card>
-          <Flex gap="3" align="center">
-            <Avatar
-              size="5"
-              src="/images/marcel.png"
-              radius="full"
-              fallback="M"
-            />
-            <Box>
-              <Text size="4" weight="bold">Marcel Welk</Text>
-              <Text size="3" color="gray">Full Stack Entwickler & Projektleiter</Text>
-            </Box>
-          </Flex>
-          <Text as="p" size="2" mt="3" color="gray">
-            Als Full Stack Entwickler und Projektleiter war ich verantwortlich für die 
-            gesamte Systemarchitektur, die Entwicklung des Frontends mit React, 
-            die Implementierung des Backends mit Node.js sowie die Cloud-Integration 
-            mit AWS. Zudem habe ich Tesseract.js für Texterkennung und externe APIs 
-            für Datenverarbeitung eingebunden.
+  const teachingAssists = [
+    { name: "Sarah Borell", role: "Teaching Assist", description: "Assistenz bei Schulungen und Workshops.", image: "/images/sarah.webp" },
+    { name: "Marian Tugui", role: "Teaching Assist", description: "Betreuung und Nachbereitung von Inhalten.", image: "/images/marian.webp" },
+  ];
+
+  const renderCard = (member, cardClass, showButtons = true) => (
+    <Box key={member.name} className={`card-container ${cardClass}`}>
+      <Card className="card-content">
+        <Flex direction="column" align="center" gap="2" p="3">
+          <Avatar size="5" src={member.image} radius="full" className="card-avatar" />
+          <Box textAlign="center" className="name-role-box">
+            <Text size="4" weight="bold" className="card-title">{member.name}</Text>
+            <Text size="3" mt="1" className="card-role">{member.role}</Text>
+          </Box>
+          <Text as="p" size="2" mt="2" textAlign="center" className="card-description">
+            {member.description}
           </Text>
-          {/* Buttons */}
-          <Flex mt="3" gap="2" justify="center">
-            <Button
-              as="a"
-              href="https://github.com/celtechstarter"
-              target="_blank"
-              variant="solid"
-              color="gray"
-            >
-              GitHub
-            </Button>
-            <Button
-              as="a"
-              href="mailto:marcel.welk87@gmail.com"
-              variant="solid"
-              color="green"
-            >
-              Kontakt
-            </Button>
-            <Button
-              as="a"
-              href="https://www.linkedin.com/in/marcel-welk-572a412ab/"
-              target="_blank"
-              variant="solid"
-              color="blue"
-            >
-              LinkedIn
-            </Button>
-          </Flex>
-        </Card>
-      </Box>
-
-      {/* Willy Ellwart */}
-      <Box maxWidth="350px" style={{ marginBottom: '20px' }}>
-        <Card>
-          <Flex gap="3" align="center">
-            <Avatar
-              size="3"
-              src="/images/willy.png"
-              radius="full"
-              fallback="T"
-            />
-            <Box>
-              <Text as="div" size="4" weight="bold">
-                Willy Ellhart
-              </Text>
-              <Text as="div" size="3" color="gray">
-                DevOps Engineering
-              </Text>
-              <Flex mt="3" gap="2" justify="center">
-              <Button
-              as="a"
-              href="https://github.com/WillyEllwart"
-              target="_blank"
-              variant="solid"
-              color="gray"
-              >
-              GitHub
-            </Button>
-            <Button
-              as="a"
-              href="mailto:willellwart@gmail.com"
-              variant="solid"
-              color="green"
-            >
-              Kontakt
-            </Button>
-            <Button
-              as="a"
-              href="https://www.linkedin.com/in/willy-ellwart-b1977a2b8/"
-              target="_blank"
-              variant="solid"
-              color="blue"
-            >
-              LinkedIn
-            </Button> 
+          {showButtons && (
+            <Flex mt="3" gap="2" justify="center">
+              <Button asChild className="button github-button">
+                <a href={member.github || "#"} target="_blank" rel="noopener noreferrer">GitHub</a>
+              </Button>
+              <Button asChild className="button contact-button">
+                <a href={member.email || "#"} rel="noopener noreferrer">Kontakt</a>
+              </Button>
+              <Button asChild className="button linkedin-button">
+                <a href={member.linkedin || "#"} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              </Button>
             </Flex>
-            </Box>
-          </Flex>
-        </Card>
+          )}
+        </Flex>
+      </Card>
+    </Box>
+  );
+
+  return (
+    <Box className="about-container">
+      <ScrollArea className="scroll-container">
+        <Container size="3" px="4" py="5">
+          <Box className="section-box">
+            <Text className="project-title">PokeScan Technologies – Scan your Pokemon Cards</Text>
+            <br />
+            <Text className="project-description">
+              PokeScan nutzt modernste Technologien, um Pokémon-Karten mithilfe von AWS Textract zu analysieren und deren Kartenpreise effizient darzustellen.
+            </Text>
+          </Box>
+
+          <Box className="section-box">
+            <Text className="section-title">Unser Team</Text>
+            <Flex wrap="wrap" justify="center" gap="6">
+              {teamMembers.map((member) => renderCard(member, "team-card", true))}
+            </Flex>
+          </Box>
+
+          <Box className="section-box">
+            <Text className="section-title">Unsere Trainer</Text>
+            <Flex wrap="wrap" justify="center" gap="6">
+              {trainers.map((member) => renderCard(member, "trainer-card", false))}
+            </Flex>
+          </Box>
+
+          <Box className="section-box">
+            <Text className="section-title">Unsere Teaching Assists</Text>
+            <Flex wrap="wrap" justify="center" gap="6">
+              {teachingAssists.map((member) => renderCard(member, "teaching-card", false))}
+            </Flex>
+          </Box>
+        </Container>
+      </ScrollArea>
+      <Box className="footer-box">
+        <Text size="3" weight="bold">© 2024 PokeScan Technologies</Text>
+        <Text size="3">Sponsor: PokéScan Technologies</Text>
       </Box>
-    </Flex>
+    </Box>
   );
 };
 
