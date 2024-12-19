@@ -27,6 +27,7 @@ function App() {
     setIsAuthenticated(true);
     setUserName(userData.name || userData.email); // Benutzername/E-Mail speichern
     localStorage.setItem("user", JSON.stringify(userData)); // Speichere die Benutzerdaten
+    console.log("Benutzerangabe:", userData);
   };
 
   // Logout-Handler

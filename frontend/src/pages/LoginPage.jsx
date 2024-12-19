@@ -2,13 +2,43 @@ import React from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import * as Dialog from "@radix-ui/react-dialog";
 
+
 const LoginPage = ({ onLoginSuccess }) => {
   const handleGoogleLoginSuccess = (credentialResponse) => {
     console.log("Login erfolgreich:", credentialResponse);
-    const user = { token: credentialResponse.credential }; // Token speichern
-    localStorage.setItem("user", JSON.stringify(user)); // Speichere Benutzerinformationen
-    onLoginSuccess(user); // Authentifizierung aktivieren
+    console.log("credentialResponse Inhalt:", JSON.stringify(credentialResponse)); // Zeigt alle Details
+    if (credentialResponse && credentialResponse.credential) {
+      const userData = parseJwt(token);
+      const user = {
+        token: credentialResponse.credential, // Google ID-Token
+        // Profilinformationen aus dem Token extrahieren, falls verfügbar
+        name: userData.name, // Extraktion des Namens
+        email: userData.email,  // Extraktion der E-Mail-Adresse
+      };
+      localStorage.setItem("user", JSON.stringify(user));
+      console.log("Eingeloggt ist:", user.email);
+      onLoginSuccess(user);
+    } else {
+      console.error("Fehler beim Abrufen der Benutzerdaten", credentialResponse);
+    }
   };
+  //const handleGoogleLoginSuccess = (credentialResponse) => {
+  //  console.log("Login erfolgreich:", credentialResponse);
+  //  const user = { token: credentialResponse.credential }; // Token speichern
+  //  localStorage.setItem("user", JSON.stringify(user)); // Speichere Benutzerinformationen
+  //  console.log("Eingeloggt ist:", user);
+  //  onLoginSuccess(user); // Authentifizierung aktivieren
+  //};
+
+  function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+  
+    return JSON.parse(jsonPayload); // Gibt die JSON-Daten zurück
+  }
 
   const handleGoogleLoginError = () => {
     console.error("Login fehlgeschlagen");
@@ -66,7 +96,8 @@ const LoginPage = ({ onLoginSuccess }) => {
               <Dialog.Title style={{ marginBottom: "1rem", fontSize: "1.5rem" }}>
                 Login mit Google
               </Dialog.Title>
-              <GoogleLogin onSuccess={handleGoogleLoginSuccess} onError={handleGoogleLoginError} />
+              <GoogleLogin onSuccess={handleGoogleLoginSuccess} onError={handleGoogleLoginError} 
+              scope="profile email"/>
               <Dialog.Close
                 style={{
                   marginTop: "10px",
