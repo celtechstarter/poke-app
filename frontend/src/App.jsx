@@ -7,6 +7,7 @@ import ScanPage from "./pages/Scan";
 import LoginPage from "./pages/LoginPage";
 import MyCards from "./pages/MyCards";
 import Navbar from "./components/Navbar";
+import "./Footer.css";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -42,8 +43,9 @@ function App() {
   };
 
   return (
-    <Theme appearance={themeMode} accentColor="crimson" grayColor="sand" radius="medium" scaling="95%">
+    <Theme appearance={themeMode} accentColor="gray" grayColor="sand" radius="medium" scaling="95%">
       <Router>
+      <div className="app-container">
         <div className="content background">
           <Flex justify="between" align="center" p="3">
             {/* Darkmode Toggle Button */}
@@ -74,8 +76,27 @@ function App() {
               <Route path="*" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
             </Routes>
           )}
+
         </div>
-      </Router>
+
+        {/* Footer */}
+        <footer className="app-footer">
+  <div className="footer-logo-container">
+    <img src="/images/Pokeball.png" alt="Rotierendes Logo" className="rotating-logo-footer" />
+  </div>
+  <Text size="2" weight="bold" color="gray">
+    © 2024 PokeScan Technologies
+  </Text>
+  <Text size="2" color="gray">
+    Powered by AWS & React
+  </Text>
+</footer>
+
+      </div>
+
+
+        
+     </Router>
     </Theme>
   );
 }

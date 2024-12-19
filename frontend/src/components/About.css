@@ -1,70 +1,8 @@
 .about-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-.scroll-container {
-  flex: 1;
-  overflow-y: auto;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  background-color: #f9f9f9;
-}
-
-.footer-box {
-  background-color: #1e1e1e;
-  color: white;
-  text-align: center;
-  padding: 20px;
-  font-size: 14px;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.card-container {
-  width: 280px;
-  border-radius: 10px;
-  margin: 10px;
-  transition: transform 0.3s ease;
-}
-
-.card-container:hover {
-  transform: translateY(-8px);
-}
-
-.card-content {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  padding: 16px;
-  background-color: white;
-  border-radius: 15px;
-}
-
-.team-card {
-  background-color: #e3f2fd;
-}
-
-.trainer-card {
-  background-color: #ffecb3;
-}
-
-.teaching-card {
-  background-color: #c8e6c9;
-}
-
-.card-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: #222;
-  margin-bottom: 4px;
-}
-
-.card-role {
-  font-size: 14px;
-  color: #555;
-}
-
-.card-description {
-  font-size: 12px;
-  color: #777;
+  opacity: 0.99;
 }
 
 .section-box {
@@ -72,15 +10,66 @@
   margin-bottom: 40px;
 }
 
-.project-title, .section-title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #333;
+.card-container {
+  width: 280px;
+  background: rgba(255, 255, 255, 0.3); /* Transparenter Hintergrund */
+ 
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Initialer Shadow */
 }
 
-.project-description {
-  font-size: 1.1rem;
+.card-container:hover {
+  transform: translateY(-8px); /* Leichtes Schweben */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Intensiverer Shadow beim Hover */
+}
+
+.card-content {
+  padding: 16px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+
+.card-container:hover .card-content {
+  background: rgba(255, 255, 255, 0.9); /* Hellerer Hintergrund beim Hover */
+}
+
+.card-container img {
+  border-radius: 50%; /* Rundes Bild für Avatar */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow um Avatar-Bilder */
+  transition: box-shadow 0.3s ease;
+}
+
+.card-container:hover img {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Stärkerer Shadow beim Hover */
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.card-role {
+  font-size: 1rem;
   color: #555;
-  max-width: 700px;
-  margin: 0 auto;
+}
+
+.card-description {
+  font-size: 0.9rem;
+  color: #777;
+  line-height: 1.5;
+}
+
+/* Responsive Anpassung */
+@media (max-width: 768px) {
+  .card-container {
+    width: 90%; /* Breitere Karten auf kleineren Bildschirmen */
+    margin: 10px auto;
+  }
+
+  .about-container {
+    padding: 10px;
+  }
 }
