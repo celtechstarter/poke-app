@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@radix-ui/react-menubar": "^1.1.4",
     "dotenv": "^16.4.6",
     "mongoose": "^8.8.3"
   },

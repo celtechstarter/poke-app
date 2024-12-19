@@ -7,9 +7,35 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
   font-family: var(--font-sans); /* Grundschrift aus Radix */
+  scrollbar-width: 8px;
+  scrollbar-color: transparent transparent; /* Unsichtbar bis Scrollen */
 }
+
+::-webkit-scrollbar {
+  width: 3px; /* Breite der Scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); /* Farbe der Scroll-Leiste */
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.5); /* Hover-Effekt */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Track bleibt unsichtbar */
+}
+
+body:hover ::-webkit-scrollbar-thumb {
+  visibility: visible; /* Scrollbar beim Scrollen sichtbar */
+}
+
+
 
 
 .app-container {
@@ -67,7 +93,7 @@ html, body {
 }
 
 
-/* Rotierendes Logo Container */
+ 
 .rotating-logo-container {
   width: 65px; /* Breite des Logos */
   height: 70px; /* Höhe des Logos */
@@ -76,14 +102,14 @@ html, body {
   align-items: center;
 }
 
-/* Rotierendes Logo */
+
 .rotating-logo {
   width: 100%;
   height: auto;
   animation: spin 15s linear infinite; /* Rotationseffekt */
 }
 
-/* Keyframes für die Rotation */
+
 @keyframes spin {
   from {
     transform: rotateY(0deg); /* Startwinkel */
@@ -108,7 +134,7 @@ html, body {
   color: white;
   padding: 10px 20px;
   border-radius: 8px;
-  background: linear-gradient(245deg, #e0e0e0, #9d9c9c); /* Chrome-Effekt */
+  background: linear-gradient(245deg, #e0e0e0, #9d9c9c);  
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.5);
   transition: all 0.4s ease;
 }
@@ -119,7 +145,7 @@ html, body {
   background: linear-gradient(245deg, #e0e0e0, #c4c4c4); /* Hellerer Effekt */
 }
 
-/* Logout Button */
+ /*Logout Button */
 .navbar button {
   font-weight: bold;
   font-size: 16px;

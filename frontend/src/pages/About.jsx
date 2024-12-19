@@ -7,7 +7,7 @@ const About = () => {
     direction="column" // Vertikale Ausrichtung
     justify="center"   // Vertikale Zentrierung
     align="center"     // Horizontale Zentrierung
-    style={{ minHeight: '100vh' }} // Stellt sicher, dass der Container die volle Höhe des Bildschirms einnimmt
+    style={{ minHeight: '100vh',  overflow: 'auto' }} // Stellt sicher, dass der Container die volle Höhe des Bildschirms einnimmt
     >
       <h1>Über uns</h1>
       <p>Informationen über die Pokémon Karten-Scanner App.</p>
