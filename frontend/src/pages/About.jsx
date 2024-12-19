@@ -43,7 +43,7 @@ const About = () => {
 
   // Teaching Assist-Daten
   const teachingAssists = [
-    { name: "Sarah Borell", role: "Teaching Assist", description: "Assistenz bei Schulungen und Workshops.", image: "/images/sarah.webp" },
+    { name: "Sarah Borrell", role: "Teaching Assist", description: "Assistenz bei Schulungen und Workshops.", image: "/images/sarah.webp" },
     { name: "Marian Tugui", role: "Teaching Assist", description: "Betreuung und Nachbereitung von Inhalten.", image: "/images/marian.webp" },
   ];
 
