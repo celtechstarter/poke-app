@@ -1,0 +1,74 @@
+/* Container für die gesamte Seite */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('/images/login-background.jpg') no-repeat center center fixed; /* Hintergrundbild */
+    background-size: cover; /* Skaliert das Bild */
+    font-family: 'Arial', sans-serif;
+  }
+  
+  
+  /* Login-Button */
+  .login-button {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(245deg, #e0e0e0, #9d9c9c);  
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    transition: all 0.4s ease;
+  }
+  
+  .login-button:hover {
+    transform: translateY(2px); /* Hebt den Button leicht an */
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4), inset 0 -1px 3px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(245deg, #e0e0e0, #c4c4c4); /* Hellerer Effekt */
+}
+  
+  /* Modal Overlay */
+  .dialog-overlay {
+    background-color: rgba(34, 34, 34, 0.5);
+    position: fixed;
+    inset: 0;
+  }
+  
+  /* Modal Content */
+  .dialog-content {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .dialog-title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .dialog-close {
+    margin-top: 10px;
+    display: block;
+    color: #4285F4;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .dialog-close:hover {
+    text-decoration: underline;
+  }
+  

@@ -49,10 +49,11 @@ function App() {
         <div className="content background">
           <Flex justify="between" align="center" p="3">
             {/* Darkmode Toggle Button */}
+            {isAuthenticated && (
             <Button onClick={toggleTheme}>
               {themeMode === "light" ? "Dark Mode aktivieren" : "Light Mode aktivieren"}
             </Button>
-
+            )}
             {/* Anzeige des eingeloggten Benutzers */}
             {isAuthenticated && (
               <Text size="3" weight="bold" color="gray">

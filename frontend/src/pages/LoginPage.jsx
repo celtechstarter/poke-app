@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import * as Dialog from "@radix-ui/react-dialog";
 
@@ -77,6 +77,54 @@ const LoginPage = ({ onLoginSuccess }) => {
                 }}
               >
                 Abbrechen
+              </Dialog.Close>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
+      </div>
+    </GoogleOAuthProvider>
+  );
+};
+
+export default LoginPage;
+*/
+
+import React from "react";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import * as Dialog from "@radix-ui/react-dialog";
+import "./LoginPage.css";
+
+const LoginPage = ({ onLoginSuccess }) => {
+  const handleGoogleLoginSuccess = (credentialResponse) => {
+    console.log("Login erfolgreich:", credentialResponse);
+    const user = { token: credentialResponse.credential }; // Token speichern
+    localStorage.setItem("user", JSON.stringify(user)); // Speichere Benutzerinformationen
+    onLoginSuccess(user); // Authentifizierung aktivieren
+  };
+
+  const handleGoogleLoginError = () => {
+    console.error("Login fehlgeschlagen");
+  };
+
+  return (
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <div className="login-container">
+        <Dialog.Root>
+          <Dialog.Trigger className="login-button">
+            Login mit Google
+          </Dialog.Trigger>
+          <Dialog.Portal>
+            <Dialog.Overlay className="dialog-overlay" />
+            <Dialog.Content className="dialog-content">
+              <Dialog.Title className="dialog-title">
+                Login mit Google
+              </Dialog.Title>
+              <GoogleLogin
+                onSuccess={handleGoogleLoginSuccess}
+                onError={handleGoogleLoginError}
+              />
+              <Dialog.Close asChild>
+                <a href="#" className="dialog-close">Abbrechen</a>
               </Dialog.Close>
             </Dialog.Content>
           </Dialog.Portal>
