@@ -2,41 +2,46 @@ import React from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import * as Dialog from "@radix-ui/react-dialog";
 
-
 const LoginPage = ({ onLoginSuccess }) => {
   const handleGoogleLoginSuccess = (credentialResponse) => {
     console.log("Login erfolgreich:", credentialResponse);
     console.log("credentialResponse Inhalt:", JSON.stringify(credentialResponse)); // Zeigt alle Details
+
     if (credentialResponse && credentialResponse.credential) {
+      const token = credentialResponse.credential;
       const userData = parseJwt(token);
-      const user = {
-        token: credentialResponse.credential, // Google ID-Token
-        // Profilinformationen aus dem Token extrahieren, falls verfügbar
-        name: userData.name, // Extraktion des Namens
-        email: userData.email,  // Extraktion der E-Mail-Adresse
-      };
-      localStorage.setItem("user", JSON.stringify(user));
-      console.log("Eingeloggt ist:", user.email);
-      onLoginSuccess(user);
+      
+      // Überprüfen, ob die Felder `name` und `email` im Decoded-Token existieren
+      if (userData && userData.name && userData.email) {
+        const user = {
+          token: credentialResponse.credential, // Google ID-Token
+          name: userData.name, // Extraktion des Namens
+          email: userData.email,  // Extraktion der E-Mail-Adresse
+        };
+
+        // Speichern der Benutzerdaten im localStorage
+        localStorage.setItem("user", JSON.stringify(user));
+        console.log("Dekodierte Daten:", userData);
+        console.log("Eingeloggt ist:", user.email);
+        
+        // Übergabe der Benutzerdaten an die App-Komponente
+        onLoginSuccess(user);
+      } else {
+        console.error("Benutzerdaten fehlen im Token:", userData);
+      }
     } else {
       console.error("Fehler beim Abrufen der Benutzerdaten", credentialResponse);
     }
   };
-  //const handleGoogleLoginSuccess = (credentialResponse) => {
-  //  console.log("Login erfolgreich:", credentialResponse);
-  //  const user = { token: credentialResponse.credential }; // Token speichern
-  //  localStorage.setItem("user", JSON.stringify(user)); // Speichere Benutzerinformationen
-  //  console.log("Eingeloggt ist:", user);
-  //  onLoginSuccess(user); // Authentifizierung aktivieren
-  //};
 
+  // Funktion zum Dekodieren des ID-Tokens (JWT)
   function parseJwt(token) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
       return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
-  
+
     return JSON.parse(jsonPayload); // Gibt die JSON-Daten zurück
   }
 
@@ -44,8 +49,6 @@ const LoginPage = ({ onLoginSuccess }) => {
     console.error("Login fehlgeschlagen");
   };
 
-
-  
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <div
