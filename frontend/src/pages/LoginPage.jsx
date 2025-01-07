@@ -115,6 +115,7 @@ const LoginPage = ({ onLoginSuccess }) => {
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay className="dialog-overlay" />
+
             <Dialog.Content className="dialog-content">
               <Dialog.Title className="dialog-title">
                 Login mit Google
@@ -124,7 +125,7 @@ const LoginPage = ({ onLoginSuccess }) => {
                 onError={handleGoogleLoginError}
               />
               <Dialog.Close asChild>
-                <a href="#" className="dialog-close">Abbrechen</a>
+                  <button className="dialog-button">Abbrechen</button>
               </Dialog.Close>
             </Dialog.Content>
           </Dialog.Portal>

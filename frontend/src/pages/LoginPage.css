@@ -40,35 +40,48 @@
   
   /* Modal Content */
   .dialog-content {
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-    width: 400px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.9);  /* Leicht transparent */
+    border-radius: 12px;
+    padding: 30px;
+    width: 420px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); 
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-  }
-  
-  .dialog-title {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
+    border: 1px solid rgba(224, 224, 224, 0.8);  /* Leichter Rand */
+    backdrop-filter: blur(10px);  /* Weichzeichner für einen Glas-Effekt */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+
+.dialog-title {
+    font-size: 1.75rem;
     font-weight: bold;
     color: #333;
-  }
-  
-  .dialog-close {
-    margin-top: 10px;
-    display: block;
-    color: #4285F4;
-    font-weight: bold;
-    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.dialog-button {
     text-decoration: none;
-  }
-  
-  .dialog-close:hover {
-    text-decoration: underline;
-  }
-  
+    font-weight: bold;
+    font-size: 14px;
+    color: #ffffff;
+    padding: 10px 25px;
+    border-radius: 6px;
+    border: 1px solid #ededed;
+    background-color: #868686;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.dialog-button:hover {
+    background-color: #b1b1b1;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
