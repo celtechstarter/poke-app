@@ -1,29 +1,26 @@
-version: "3.8"
 services:
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:80"
-
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
     ports:
       - "5000:5000"
+    env_file:
+      - ./backend/.env
+    restart: always
     environment:
-      - MONGO_URI=mongodb://mongo:27017/pokescandb
-      - SESSION_SECRET=your-session-secret
-
-  mongo:
-    image: mongo:5.0
-    container_name: mongo
-    ports:
-      - "27017:27017"
+      - NODE_ENV=production
     volumes:
-      - mongo-data:/data/db
+      - ./backend:/app
+      - /app/node_modules
+    command: ["npm", "start"]
 
-volumes:
-  mongo-data:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    env_file:
+      - ./frontend/.env
+    restart: always
+    volumes:
+      - ./frontend:/usr/share/nginx/html
