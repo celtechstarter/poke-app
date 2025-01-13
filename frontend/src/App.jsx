@@ -70,8 +70,9 @@ function App() {
             <Routes>
               {!isAuthenticated ? (
                 <>
-                  <Route path="/" element={<Navigate to="/scan" />} />
+                  <Route path="/" element={<Navigate to="/Home" />} />
                   <Route path="/about" element={<About />} />
+                  <Route path="/home" element={<Home />} />
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/scan" element={<ScanPage />} />
                   <Route path="/my-cards" element={<MyCards />} />
