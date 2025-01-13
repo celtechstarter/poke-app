@@ -37,10 +37,6 @@ const LoginPage = () => {
 
 export default LoginPage;
 
-
-
-//Alte Logik für das Login mit Google
-// import React from "react";
 // import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 // import * as Dialog from "@radix-ui/react-dialog";
 // import "./LoginPage.css";

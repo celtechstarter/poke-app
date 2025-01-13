@@ -42,6 +42,13 @@ app.use(
   })
 );
 
+// Funktion zum Entfernen doppelter Einträge
+const removeDuplicates = (array, key) => {
+  return array.filter((item, index, self) =>
+    index === self.findIndex((t) => t[key] === item[key])
+  );
+};
+
 // Routes
 app.use('/scan', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
@@ -80,6 +87,11 @@ app.use((err, req, res, next) => {
 // 404 Fehlerbehandlung
 app.use((req, res) => {
   res.status(404).json({ error: 'Route nicht gefunden.' });
+});
+
+// Server starten
+app.listen(port, () => {
+  console.log(`Server läuft auf Port ${port}`);
 });
 
 // // Server starten
