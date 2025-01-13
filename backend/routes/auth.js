@@ -67,3 +67,5 @@ router.get("/logout", (req, res) => {
 });
 
 module.exports = router;
+ //app.use(passport.initialize());
+//app.use(passport.session());
