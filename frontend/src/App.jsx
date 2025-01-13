@@ -1,47 +1,41 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { Theme, Button, Flex, Text } from "@radix-ui/themes";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Theme, Flex, Text } from "@radix-ui/themes";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import ScanPage from "./pages/Scan";
-import LoginPage from "./pages/LoginPage";
 import MyCards from "./pages/MyCards";
 import Navbar from "./components/Navbar";
 import "./Footer.css";
-import "./App.css"; // Stelle sicher, dass die globalen Stile für die App geladen werden
+import "./App.css";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [themeMode, setThemeMode] = useState("light");
-  const [userName, setUserName] = useState("");
 
-  // Überprüfen, ob der Benutzer eingeloggt ist
+  // Benutzer-Status prüfen (Google OAuth auskommentiert)
+  /*
   useEffect(() => {
-    try {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (user) {
-        setIsAuthenticated(true);
-        setUserName(user.name || user.email);
-      }
-    } catch (error) {
-      console.error("Fehler beim Laden der Benutzerdaten:", error);
-      localStorage.removeItem("user"); // Lösche fehlerhafte Daten
-    }
+    fetch("http://localhost:5000/auth/current_user", {
+      credentials: "include",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Nicht authentifiziert");
+        }
+      })
+      .then((data) => {
+        if (data && data.displayName) {
+          setIsAuthenticated(true);
+          setUserName(data.displayName);
+        }
+      })
+      .catch(() => {
+        setIsAuthenticated(false);
+      });
   }, []);
-
-  // Login-Handler
-  const handleLoginSuccess = (userData) => {
-    setIsAuthenticated(true);
-    setUserName(userData.name || userData.email);
-    localStorage.setItem("user", JSON.stringify(userData));
-  };
-
-  // Logout-Handler
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    setUserName("");
-    localStorage.removeItem("user");
-  };
+  */
 
   // Theme-Umschaltung
   const toggleTheme = () => {
@@ -52,36 +46,19 @@ function App() {
     <Theme appearance={themeMode} accentColor="gray" grayColor="sand" radius="medium" scaling="95%">
       <Router>
         <div className="app-container">
-          <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} /> {/* Navbar hinzugefügt */}
+          <Navbar />
           <div className="content background">
             <Flex justify="between" align="center" p="3">
-              {isAuthenticated && (
-                <Button onClick={toggleTheme}>
-                  {themeMode === "light" ? "Dark Mode aktivieren" : "Light Mode aktivieren"}
-                </Button>
-              )}
-              {isAuthenticated && (
-                <Text size="3" weight="bold" color="gray">
-                  Eingeloggt als: {userName}
-                </Text>
-              )}
+              <button onClick={toggleTheme} style={{ padding: "10px", border: "none", cursor: "pointer" }}>
+                {themeMode === "light" ? "Dark Mode aktivieren" : "Light Mode deaktivieren"}
+              </button>
             </Flex>
 
             <Routes>
-              {!isAuthenticated ? (
-                <>
-                  <Route path="/" element={<Navigate to="/Home" />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/home" element={<Home />} />
-                  <Route path="/login" element={<LoginPage />} />
-                  <Route path="/scan" element={<ScanPage />} />
-                  <Route path="/my-cards" element={<MyCards />} />
-                </>
-              ) : (
-                <>
-                  <Route path="*" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
-                </>
-              )}
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/scan" element={<ScanPage />} />
+              <Route path="/my-cards" element={<MyCards />} />
             </Routes>
           </div>
 
